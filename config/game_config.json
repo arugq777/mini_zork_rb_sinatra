@@ -1,0 +1,57 @@
+{
+    "game_settings":{
+        "prompt": ">> ",
+        "gems_required":6,
+        "turns_between_rest":5,
+        "random_gems":true,
+        "random_gem_chance":5,
+        "randomize_goal":true,
+        "randomize_player_start":false,
+        "randomize_grue_start":false,
+        "allow_two_way_corridors":false,
+        "messages":{
+            "lose1":["\nThe grue sneaks up behind you",
+                     "\nThe grue emerges from the darkness",
+                     "\nThe grue is here"],
+            "lose2":[", and tears you limb from limb, which is actually a little better than being anywhere near the burnt sienna room.",
+                    "! By the time you notice the serrated fangs in your neck, it's already too late.",
+                    ", bringing its razor-sharp claws and ravenous appetite. You aren't much of a match for either of those things on their own, much less together...",
+                    "! There isn't even time for your life to flash before your eyes--just the flash of a wide rictus opening in the darkness."],
+            "win" :["\nYou place the gems into the machine, and a portal opens. You're unsure if it actually goes home or not, but you are sure that you hate burnt sienna and unseen creatures lurking in the darkness. There is no hesitation as you walk through.",
+                    "\nThe gems you've collected begin to glow brightly after being placed in the machine. A circle of solid lightning appears before you, drawing your molecules and consciousness into it. This might not be the way home, but it also seems to be the only option.",
+                    "\nAs you enter the room, the machine takes your collected gems and combines them into a a large crystalline automaton, which picks you up and fires you from its large crystalline arm-cannon. Oh, this will be a story to tell the grandkids--assuming: \n\t1) You survive.\n\t2) This actually gets you home.\n\t3) Crystalline arm cannon radiation doesn't render you sterile."]
+        }
+    },
+
+    "player_settings":{ 
+        "room": "emerald",
+        "inventory":{"gems":1}, 
+        "settings":{"gem_sense" :true,
+                    "grue_sense":true,
+                    "goal_sense":true,
+                    "clairvoyance":true},
+        "messages":{
+            "rest":["\nAll of this transdimensional extraterrestrial spelunking is getting to you. A brief rest is unanimously decided upon (by your legs--they both voted (the rest of your body never even bothered to register)).",
+                    "\nAre gems supposed to be this heavy? Are grues supposed to be this scary? It's all too much! You need to take a breather.",
+                    "\nYou decide to rest.",
+                    "\nThis room looks familiar... Are you running around in circles? You take a brief respite to regain your bearings."],
+            "grue":["\nOut of the corner of your eye, you sense movement in one of the passages. Whatever it was may still be there...",
+                    "\nIt may just be you, but something in one of the nearby rooms smells odd.",
+                    "\nIn one of the nearby rooms, you hear faint shuffling and scraping noises."],
+            "gem" :["\nUpon entering this room, your gem begins to glow and hum. Something in a nearby room hums back in harmony."],
+            "goal":["\nThere's a crackling of energy nearby--the hairs on the back of your neck begin to stand on end.", 
+                    "\nYou hear machinery clanking; the gems in your pocket hum audibly.",
+                    "\nThe gems in your pocket almost seem to be gravitating toward a nearby room."]
+        }
+    },
+
+    "grue_settings":{ 
+        "room":"cobalt", 
+        "messages":{
+            "flee":["\nAs you enter, a strange creature scurries off to a nearby room!",
+                    "\nThe air in this room feels tense, as though something just left in a hurry.",
+                    "\nAn odd scent lingers in the air. The source is probably lingering nearby as well.",
+                    "\nStrange sounds can be heard trailing away as you enter this room."]
+        }
+    }
+}

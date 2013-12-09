@@ -1,0 +1,172 @@
+{
+	"rooms":[
+		{"color": "vermilion", "adjective": "bright", "gems":1},
+		{"color": "ochre", "adjective": "dull"},
+		{"color": "chartreuse", "adjective": "eye cancer-inducing"},
+		{"color": "emerald", "adjective": "shimmering", "flags":"goal"},
+		{"color": "cobalt", "adjective": "smooth"},
+		{"color": "aquamarine", "adjective": "dazzling", "gems":1},
+		{"color": "lavender", "adjective": "soothing"},
+		{"color": "violet", "adjective": "vivid"},
+		{"color": "burnt sienna", "adjective": "ugly", 
+			"description":"This room is the sickly shade of burnt sienna--practically everyone's least-favorite shade of brown."
+		}
+	],
+	
+	"goal":"violet",
+
+	"exits":[
+		{	
+	 		"from_room": "vermilion",
+			"from_direction": "south",
+	 		"to_room": "aquamarine",
+	 		"to_direction": "north"
+		},
+
+		{
+			"from_room": "vermilion",
+			"from_direction": "east",
+			"to_room": "ochre",
+			"to_direction": "west"
+		},
+
+		{
+			"from_room": "ochre",
+			"from_direction": "north",
+			"to_room": "vermilion",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "ochre",
+			"from_direction": "south",
+			"to_room": "ochre",
+			"to_direction": "west"
+		},
+
+		{
+			"from_room": "ochre",
+			"from_direction": "east",
+			"to_room": "chartreuse",
+			"to_direction": "west"
+		},
+
+		{
+			"from_room": "chartreuse",
+			"from_direction": "south",
+			"to_room": "emerald",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "chartreuse",
+			"from_direction": "north",
+			"to_room": "ochre",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "emerald",
+			"from_direction": "east",
+			"to_room": "lavender",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "emerald",
+			"from_direction": "west",
+			"to_room": "cobalt",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "emerald",
+			"from_direction": "south",
+			"to_room": "aquamarine",
+			"to_direction": "east"
+		},
+
+		{
+			"from_room": "cobalt",
+			"from_direction": "north",
+			"to_room": "vermilion",
+			"to_direction": "south"
+		},
+
+		{
+			"from_room": "cobalt",
+			"from_direction": "west",
+			"to_room": "vermilion",
+			"to_direction": "west"
+		},
+
+		{
+			"from_room": "cobalt",
+			"from_direction": "south",
+			"to_room": "burnt sienna",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "aquamarine",
+			"from_direction": "west",
+			"to_room": "cobalt",
+			"to_direction": "east"
+		},
+
+		{
+			"from_room": "aquamarine",
+			"from_direction": "south",
+			"to_room": "violet",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "lavender",
+			"from_direction": "east",
+			"to_room": "chartreuse",
+			"to_direction": "east"
+		},
+
+		{
+			"from_room": "lavender",
+			"from_direction": "west",
+			"to_room": "burnt sienna",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "violet",
+			"from_direction": "west",
+			"to_room": "chartreuse",
+			"to_direction": "north"
+		},
+
+		{
+			"from_room": "violet",
+			"from_direction": "east",
+			"to_room": "burnt sienna",
+			"to_direction": "west"
+		},
+
+		{
+			"from_room": "violet",
+			"from_direction": "south",
+			"to_room": "burnt sienna",
+			"to_direction": "west"
+		},
+
+		{
+			"from_room": "burnt sienna",
+			"from_direction": "north",
+			"to_room": "emerald",
+			"to_direction": "south"
+		},
+
+		{
+			"from_room": "burnt sienna",
+			"from_direction": "east",
+			"to_room": "lavender",
+			"to_direction": "south"
+		}]
+}
