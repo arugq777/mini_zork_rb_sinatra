@@ -3,13 +3,13 @@ require "./lib/room_occupant"
 
 class Player < RoomOccupant
   include Singleton
-  attr_accessor :stats, :inventory, :settings, :path
+  attr_accessor :stats, :inventory, :settings, :path_to_goal
 
   def initialize
     @settings = {}
     @inventory = {}
     @messages = {}
-    @stats = {turns: 1, moves: 0, rest_countdown: nil}
+    @stats = {alive: true, turns: 1, moves: 0, rest_countdown: nil}
 
     json = File.read("./config/game_config.json")
     
@@ -34,7 +34,6 @@ class Player < RoomOccupant
   end
 
   def randomize_start
-    @room.switch_flag(:player)
     super(:player)
   end
 
@@ -96,14 +95,22 @@ class Player < RoomOccupant
     puts "\nGrue is in " + Grue.instance.is_in_room.to_s.capitalize
     puts "It's current route is: #{Grue.instance.path.route}"
     print "Goal is in " 
-    @@map.rooms.each_value {|room| print room.color.to_s.capitalize if room.is_goal?}
+    @@map.rooms.each_value do |room| 
+      if room.is_goal?
+        puts room.color.to_s.capitalize 
+        @path_to_goal = Path.new(@room.color, room.color)
+        puts "Path to goal is #{@path_to_goal.route}"
+      end
+    end
     print "\nGems can be found in:"
     @@map.rooms.each_value do |room| 
       if room.flags[:loot]
         print " " + room.color.to_s.capitalize + " [#{room.gems}]"
       end
     end
-    puts "\n"
+    @@map.rooms.each_value do |room|
+      puts room.color, room.flags
+    end
   end
 
   def rest(reset)

@@ -11,7 +11,7 @@ class MiniZork
     @@messages = {}
     @@commands =[:south, :west, :north, :east,
                  :gems, :stats, :statistics,
-                 :i, :inventory, 
+                 :i, :inventory, :rest,
                  :moves, :turns, :l, :look, 
                  :q, :quit, :restart]
 
@@ -37,14 +37,22 @@ class MiniZork
         @@settings[setting.downcase.to_sym] = game_config["game_settings"][setting]
       end
     end
-    
-    @map.random_gems(@@settings[:random_gem_chance]) if @@settings[:random_gems]
 
-    @map.randomize_goal if @@settings[:randomize_goal]
+    if @@settings[:random_gems]
+      @map.random_gems(@@settings[:random_gem_chance])
+    end 
 
-    @player.randomize_start if @@settings[:randomize_player_start]
+    if @@settings[:randomize_goal]
+      @map.randomize_goal
+    end
 
-    @grue.randomize_start if @@settings[:randomize_grue_start]
+    if @@settings[:randomize_player_start]
+      @player.randomize_start
+    end 
+
+    if @@settings[:randomize_grue_start]
+      @grue.randomize_start
+    end
   end
 
   def execute_command(command)
@@ -58,6 +66,8 @@ class MiniZork
         @grue.flee
         @player.get_loot
       end
+    else
+      get_info(command)
     end
   end
 
@@ -69,6 +79,7 @@ class MiniZork
       puts "\nYou've made #{@player.stats[:moves].to_s} moves in #{@player.stats[:turns].to_s} turns"
     when :stats, :statistics
       puts "\nTurn #{@player.stats[:turns].to_s}"
+      puts "\nTurns til rest: #{@player.stats[:rest_countdown].to_s}"
       puts "#{@player.inventory[:gems].to_s} gems"
       puts "#{@player.stats[:moves].to_s} moves\n"
     when :l, :look
@@ -82,7 +93,7 @@ class MiniZork
     @player.stats[:turns] += 1
     @player.stats[:rest_countdown] -= 1
     @grue.move
-    #puts "grue moves to #{@grue.room.color}. Current route: #{@grue.path.route}\n\n"
+    puts "grue moves to #{@grue.room.color}. Current route: #{@grue.path.route}\n"
     you_lose if @grue.room.has_player?
   end
 
@@ -106,13 +117,13 @@ class MiniZork
 
   def you_lose
     puts @@messages[:lose1].sample + @@messages[:lose2].sample
+    @player.stats[:alive] = false
     @game_over = true
   end
 
   def you_win
     puts @@messages[:win].sample
     @game_over = true
-    @@settings[:end_game] = :restart
   end
 
   def play
@@ -137,6 +148,8 @@ class MiniZork
             else
               end_turn
             end
+          elsif command_input == :rest
+            rest
           elsif command_input == :restart
             puts "restarter!"
             @game_over = true
@@ -155,9 +168,10 @@ class MiniZork
   end
 end
 
-mz = MiniZork.new
+game_on = true
 
-while mz.restart
+while game_on
   mz = MiniZork.new
   mz.play
+  game_on = mz.restart
 end
