@@ -2,13 +2,13 @@
     "game_settings":{
         "prompt": ">> ",
         "gems_required":6,
-        "turns_between_rest":5,
         "random_gems":true,
         "random_gem_chance":5,
         "randomize_goal":true,
         "randomize_player_start":true,
         "randomize_grue_start":true,
         "allow_two_way_corridors":false,
+        "turns_between_rest":5,
         "messages":{
             "lose1":["\nThe grue sneaks up behind you",
                      "\nThe grue emerges from the darkness",
@@ -25,7 +25,8 @@
 
     "player_settings":{ 
         "room": "emerald",
-        "inventory":{"gems":1}, 
+        "inventory":{"gems":1},
+        "stats":{"rest_countdown":5},
         "settings":{"gem_sense" :true,
                     "grue_sense":true,
                     "goal_sense":true,

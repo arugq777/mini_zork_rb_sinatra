@@ -9,11 +9,13 @@ class Player < RoomOccupant
     @settings = {}
     @inventory = {}
     @messages = {}
-    @stats = {turns: 1, moves: 0}
+    @stats = {turns: 1, moves: 0, rest_countdown: nil}
 
     json = File.read("./config/game_config.json")
+    
     settings = JSON.parse(json)
 
+    @stats[:rest_countdown] = settings["player_settings"]["stats"]["rest_countdown"]
     settings["player_settings"]["settings"].each do |key, bool|
       @settings[key.downcase.to_sym] = bool
     end
@@ -62,11 +64,11 @@ class Player < RoomOccupant
   end
 
   def look(gems_required)
+    sense(gems_required)
+
     print "\nYou are in the "
     @room.color.to_s.split.each {|word| print word.capitalize + " "} 
     puts "Room. #{@room.description}"
-
-    sense(gems_required)
 
     print "\nExits: "
     (0..(@room.exits.length-2)).each do |x| 
@@ -104,7 +106,8 @@ class Player < RoomOccupant
     puts "\n"
   end
 
-  def rest
+  def rest(reset)
+    @stats[:rest_countdown] = reset
     puts @messages[:rest].sample
   end
 

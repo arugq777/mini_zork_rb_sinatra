@@ -12,4 +12,6 @@ describe Player do
     p.room.exits[0].should be_a(Room::Exit)
     GameMap.instance.rooms[p.room.color].should_not == nil
   end
+
+  
 end
