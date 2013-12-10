@@ -17,4 +17,12 @@ class RoomOccupant
     @@map.rooms[new_room_color].switch_flag(flag_id)
     @room = @@map.rooms[new_room_color]
   end
+
+  def randomize_start(flag_id)
+    set_room(@@map.rooms.keys.sample, flag_id)
+    if @room.has_grue? && @room.has_player?
+      @room.switch_flag(flag_id)
+      randomize_start()
+    end
+  end
 end

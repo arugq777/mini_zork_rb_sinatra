@@ -1,8 +1,10 @@
 source :rubygems
 
 gem 'sinatra'
+gem 'sinatra-partial'
 gem 'rubytree'
 
+
 gem 'spork'
-gem 'autotest'
-gem 'ZenTest'
+gem 'rspec-core'
+gem 'watchr'

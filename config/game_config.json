@@ -6,8 +6,8 @@
         "random_gems":true,
         "random_gem_chance":5,
         "randomize_goal":true,
-        "randomize_player_start":false,
-        "randomize_grue_start":false,
+        "randomize_player_start":true,
+        "randomize_grue_start":true,
         "allow_two_way_corridors":false,
         "messages":{
             "lose1":["\nThe grue sneaks up behind you",

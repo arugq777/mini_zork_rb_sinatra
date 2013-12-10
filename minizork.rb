@@ -41,6 +41,8 @@ end
 
 @map.random_gems(@@settings[:random_gem_chance]) if @@settings[:random_gems]
 @map.randomize_goal if @@settings[:randomize_goal]
+@player.randomize_start if @@settings[:randomize_player_start]
+@grue.randomize_start if @@settings[:randomize_grue_start]
 
 def execute_command(command)
   if @map.valid_directions.include?(command)
@@ -78,7 +80,7 @@ def get_info(command)
     puts "#{@player.stats[:moves].to_s} moves\n"
   when :l, :look
     @player.get_loot
-    @player.look
+    @player.look(@@settings[:gems_required])
     @player.see
   end
 end
@@ -124,7 +126,7 @@ def play
     if new_game?
       puts "\nYou find a gem on the floor, near a strange defunct machine, which seems to have several slots for other gems. These things might be your ticket home."
     end
-    @player.look
+    @player.look(@@settings[:gems_required])
     if time_to_rest?
       rest #duh.
     else

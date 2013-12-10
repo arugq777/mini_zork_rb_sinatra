@@ -31,6 +31,11 @@ class Player < RoomOccupant
     super(room, :player)
   end
 
+  def randomize_start
+    @room.switch_flag(:player)
+    super(:player)
+  end
+
   def move(direction)
     possible_directions = {}
     @@map.rooms[@room.color].exits.each do |exit|
@@ -56,12 +61,12 @@ class Player < RoomOccupant
     end
   end
 
-  def look
+  def look(gems_required)
     print "\nYou are in the "
     @room.color.to_s.split.each {|word| print word.capitalize + " "} 
     puts "Room. #{@room.description}"
 
-    sense
+    sense(gems_required)
 
     print "\nExits: "
     (0..(@room.exits.length-2)).each do |x| 
@@ -70,15 +75,17 @@ class Player < RoomOccupant
     puts "and " + @room.exits.last.from_direction.to_s.capitalize + "."
   end
 
-  def sense
+  def sense(gems_required)
     @room.exits.each do |exit|
       case 
       when has_gem_sense? && @@map.rooms[exit.to_room].has_loot?
-        puts @messages[:gem].sample
+        puts @messages[:gem].sample + " [A gem is near.]"
       when has_goal_sense? && @@map.rooms[exit.to_room].is_goal?
-        puts @messages[:goal].sample
+        if gems_required < @inventory[:gems]
+          puts @messages[:goal].sample + " [The goal is near.]"
+        end
       when has_grue_sense? && @@map.rooms[exit.to_room].has_grue?
-        puts @messages[:grue].sample
+        puts @messages[:grue].sample + " [You are likely to be eaten by a grue.]"
       end
     end
   end

@@ -1,6 +1,8 @@
 class Room
 	attr_accessor :color, :adjective, :description, :exits, :flags, :gems
 
+  Exit = Struct.new(:from_room, :from_direction, :to_room, :to_direction)
+
   def initialize(color, adjective, exit_array, options = {})
     @color = color.downcase.to_sym
     @adjective = adjective

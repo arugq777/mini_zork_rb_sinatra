@@ -5,8 +5,6 @@ require "json"
 class GameMap
   include Singleton
   attr_accessor :rooms, :valid_directions
-  
-  Exit = Struct.new(:from_room, :from_direction, :to_room, :to_direction)
 
   def initialize
     @valid_directions = [:south, :west, :north, :east]
@@ -19,7 +17,7 @@ class GameMap
       exit_array = []
       @game_map_data["exits"].each do |exit|
         if exit["from_room"] == room["color"]
-          exit_array << Exit.new(
+          exit_array << Room::Exit.new(
             exit["from_room"].downcase.to_sym, 
             exit["from_direction"].downcase.to_sym, 
             exit["to_room"].downcase.to_sym, 
@@ -50,7 +48,7 @@ class GameMap
   end
 
   def two_way_corridor?(first_exit, second_exit)
-    opposite_exit = Exit.new(
+    opposite_exit = Room::Exit.new(
       first_exit.to_room, 
       first_exit.to_direction, 
       first_exit.from_room, 

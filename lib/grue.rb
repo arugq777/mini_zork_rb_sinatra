@@ -24,6 +24,13 @@ class Grue < RoomOccupant
 
   end
 
+  def randomize_start
+    @room.switch_flag(:grue)
+    super(:grue)
+    @path = Path.new(@room.color, Player.instance.is_in_room)
+    @path.get_route
+  end
+
   def move
     # if @settings[:session_logs]
     #   unless @path.route[0] == @room
