@@ -1,0 +1,5 @@
+This is a basic quest game written in Ruby, and given a retro look.
+
+To do: Tweak the UI some more, and get the info sidebar to work--it should update on every move. Also, set up a form to change the settings, or allow users to upload settings in a json file, or something.
+
+"Green Screen" font designed by James Shields, available at http://www.lostcarpark.com/fonts/
