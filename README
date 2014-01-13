@@ -1,4 +1,6 @@
-This is a basic quest game written in Ruby, and given a retro look. The object is to collect gems, avoid the grue, and reach the goal alive once you collect five gems. Since this is basically a demo, the grue's location and path are given on each turn, so you may try to avoid or intercept it.
+This is a basic quest game written in Ruby, and given a retro look. The object is to collect gems, avoid the grue, and reach the goal alive once you collect five gems. Since this is basically a demo, the grue's location and path are given on each turn, so you may actively try to avoid or intercept it instead of running around blind.
+
+Try it here: http://safe-sands-4182.herokuapp.com/
 
 To do: Tweak the UI some more (maybe find a more eye-cancerous shade of chartreuse), and get the info sidebar to work--it should update on every move, whereas right now it does, y'know, nothing. Also, set up a form to change the settings, or allow users to upload settings in a json file, or something.If I'm feeling really ambitious, I'll read up on actual pathing algorithms and try to use one, especially since the recent versions of the RubyTree gem break the app.
 
