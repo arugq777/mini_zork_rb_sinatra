@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $("#commandForm").submit(submitMove);
-  $("#refreshInfo").on('click','a',updateInfo);
+  // $("#refreshInfo").on('click','a',updateInfo);
 });
 
 function submitMove(ev){
@@ -33,9 +33,9 @@ function submitMove(ev){
 //   })
 // }
 
-function updateInfo(event){
-  $.get("/info", function( data ) {
-      event.preventDefault();
-      $( "#info" ).html( data );
-  });
-}
+// function updateInfo(event){
+//   $.get("/info", function( data ) {
+//       event.preventDefault();
+//       $( "#info" ).html( data );
+//   });
+// }

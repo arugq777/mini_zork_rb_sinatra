@@ -1,8 +1,8 @@
-source :rubygems
+source "https://rubygems.org"
 
 gem 'sinatra'
 gem 'sinatra-partial'
-gem 'rubytree'
+gem 'rubytree',"0.8.3"
 
 
 # gem 'spork'

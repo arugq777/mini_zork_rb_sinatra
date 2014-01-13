@@ -1,0 +1,1 @@
+web: bundle exec ruby mz_sinatra.rb -p $PORT 
