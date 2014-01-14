@@ -56,7 +56,6 @@ class Player < RoomOccupant
       set_room(possible_directions[direction], :player)
       move_msg = "You move to the #{direction.to_s.upcase}"
     else
-      move_msg = "There is no exit in that direction. Try again."
       return false
     end
     @stats[:moves] += 1
@@ -66,19 +65,19 @@ class Player < RoomOccupant
   def get_loot
     if @@map.rooms[@room.color].has_loot?
       @inventory[:gems] += @@map.rooms[@room.color].gems
-      @@map.rooms[@room.color].gems
+      @@map.rooms[@room.color].gems = 0
       @@map.rooms[@room.color].switch_flag(:loot)
-      msg = "You find another gem and put it in your pocket."
+      loot_msg = "You find another GEM and put it in your pocket."
     end
-    msg
+    loot_msg
   end
 
   def list_exits
-    exits = []
+    exits_array = []
     @room.exits.each do |exit|
-      exits << exit.from_direction.to_s
+      exits_array << exit.from_direction.to_s
     end
-    exits
+    exits_array
   end
 
   # def look(gems_required)
@@ -135,18 +134,18 @@ class Player < RoomOccupant
   end
 
   def see(grue)
-    puts "\nGrue is in " + grue.is_in_room.to_s.capitalize
+    puts "GRUE is in " + grue.is_in_room.to_s.capitalize
     puts "It's current route is: #{grue.path.route}"
-    print "Grue has fled: ", grue.fled_this_turn, "\n"
-    print "Goal is in " 
+    print "GRUE has fled: ", grue.fled_this_turn, "\n"
+    print "GOAL is in " 
     @@map.rooms.each_value do |room| 
       if room.is_goal?
         puts room.color.to_s.capitalize 
         @path_to_goal = Path.new(@room.color, room.color)
-        puts "Path to goal is #{@path_to_goal.route}"
+        puts "Path to GOAL is #{@path_to_goal.route}"
       end
     end
-    print "\nGems can be found in:"
+    print "\nGEMS can be found in:"
     @@map.rooms.each_value do |room| 
       if room.flags[:loot]
         print " " + room.color.to_s.capitalize + " [#{room.gems}]"

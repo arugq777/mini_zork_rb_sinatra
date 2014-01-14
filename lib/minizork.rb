@@ -6,7 +6,7 @@ require "./lib/game_map"
 require "json"
 
 class MiniZork
-  attr_accessor :settings, :messages, :restart, :game_over, 
+  attr_accessor :settings, :messages, :restart, :game_over, :quit,
                 :player, :map, :grue, :goal, :output_hash, :info_hash
 
   @@commands =[:south, :west, :north, :east,
@@ -15,12 +15,18 @@ class MiniZork
                :moves, :turns, :l, :look, 
                :q, :quit] #:restart
 
-  @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, :turns, :l, :look]
+  @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, 
+            :turns, :l, :look]
   @@game = [:q, :quit] #:restart
+  @@output_order = [:move, :grue_flees, :loot, :rest, :start, :look, 
+                    :sense, :exits, :grue_move, :lose, :win]
+  @@info_order = [:turns, :moves, :inventory, :rest_countdown]
+  @@clairvoyance= [:grue, :grue_path, :goal, :goal_path, :loot]
+
 
   def initialize
     @game_over = false
-    @restart = true
+    @quit = false
 
     import_settings_from_json
     import_map_from_json
@@ -84,7 +90,7 @@ class MiniZork
   def starting_output
     @output_hash = {}
     @output_hash[:start] = @messages[:start].sample
-    @output_hash[:look] = @player.look
+    @output_hash[:look]  = @player.look
     @output_hash[:sense] = @player.sense(@settings[:gems_required])
     @output_hash[:exits] = @player.list_exits 
     @info_hash = update_info_hash
@@ -93,12 +99,16 @@ class MiniZork
   def execute_command(command)
     if @map.valid_directions.include?(command)
       @output_hash[:move] = @player.move(command)
-      if @player.room.has_grue?
-        @output_hash[:grue_flees] = []
-        @output_hash[:grue_flees] << @grue.flee(player)
-        if @player.has_clairvoyance?
-          @output_hash[:grue_flees] << "[grue flees to #{@grue.room.color}. Current route: #{@grue.path.route}"
+      if @output_hash[:move]
+        if @player.room.has_grue?
+          @output_hash[:grue_flees] = []
+          @output_hash[:grue_flees] << @grue.flee(player)
+          if @player.has_clairvoyance?
+            @output_hash[:grue_flees] << "[grue flees to #{@grue.room.color}. Current route: #{@grue.path.route}"
+          end
         end
+      else
+        @output_hash[:move] = "There is no exit to the #{command.to_s.upcase}!"
       end
       @output_hash[:loot] = @player.get_loot
       if @player.room.is_goal? && victory_conditions_met?
@@ -109,9 +119,8 @@ class MiniZork
     elsif command == :rest
       rest
     elsif command == :quit
-      puts "quitter!"
       @game_over = true
-      @restart = false
+      @quit = true
     else
       puts "invalid command: #{command}"
     end
@@ -142,17 +151,17 @@ class MiniZork
     @info_hash[:player] = @player.stats
     if @player.has_clairvoyance?
       path = Path.new(@player.room.color, @map.goal)
-      loot = "Gems can be found in: "
+      loot = "GEMS can be found in: "
       @map.rooms.each_value do |room| 
         if room.flags[:loot]
           loot += room.color.to_s.capitalize + " [#{room.gems}]"
         end
       end
       @info_hash[:clairvoyance] = {
-        grue: "Grue is in: #{@grue.room.color.to_s.capitalize}",
+        grue: "GRUE is in: #{@grue.room.color.to_s.capitalize}",
         grue_path: "Current path: #{@grue.path.route}",
-        goal: "Goal is in #{@map.goal.to_s.capitalize}",
-        goal_path: "Path to goal: #{path.route}",
+        goal: "GOAL is in #{@map.goal.to_s.capitalize}",
+        goal_path: "Path to GOAL: #{path.route}",
         loot: loot
       } 
     end
@@ -202,33 +211,26 @@ class MiniZork
     @player.inventory[:gems] >= @settings[:gems_required]
   end
 
+  def print_output(print_order, hash_to_print)
+    print_order.each do |key|
+      unless hash_to_print[key].nil?
+        if hash_to_print[key].is_a?(Array) && !hash_to_print[key].empty?
+          print "[#{key.to_s}]: "
+          hash_to_print[key].each do |array_string|
+            print "#{array_string} "
+          end
+          puts ""
+        else
+          puts "[#{key.to_s}]: #{hash_to_print[key]}"
+        end
+      end
+    end    
+  end
+
   def output_for_this_turn
-    @info_hash.each do |k, v|
-      if v.is_a?(Array) && !v.empty?
-        print "[#{k.to_s}]: "
-        v.each do |array_string|
-          print "#{array_string} "
-        end
-        puts ""
-      else
-        puts "[#{k.to_s}]: #{v}"
-      end
-    end
-    @output_hash.each do |k, v|
-      if v.is_a?(Array) && !v.empty?
-        print "[#{k.to_s}]: "
-        v.each do |array_string|
-          print "#{array_string} "
-        end
-        puts ""
-      else
-        puts "[#{k.to_s}]: #{v}"
-      end
-    end
-    # puts output_hash[:move] unless output_hash[:move].nil?
-    # puts output_hash[:grue_flees] unless output_hash[:grue_flees].nil?
-    # puts output_hash[:look]
-    # puts output_hash[:loot] unless output_hash[:loot].nil?
+    print_output(@@info_order, @info_hash[:player])
+    print_output(@@clairvoyance, @info_hash[:clairvoyance])
+    print_output(@@output_order, @output_hash)
   end
 
 
