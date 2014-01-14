@@ -1,9 +1,9 @@
 require "tree"
-require "./lib/game_map"
+#require "./lib/game_map"
 
 class Path
   attr_accessor :from_room, :to_room, :route, :possible_routes, :map
-
+  
   def initialize(from_room, to_room)
     @from_room = from_room
     @to_room = to_room
@@ -12,8 +12,12 @@ class Path
     @route = get_route
   end 
 
+  def self.set_map(map)
+    @@map = map
+  end
+
   def calculate_paths(node, start, goal)
-    rooms = GameMap.instance.rooms
+    rooms = @@map.rooms
     if rooms[start].nil? || rooms[goal].nil?
       puts "Path between #{start.to_s} and #{goal.to_s} not found: Invalid input?"
       #log info: "Path between #{start.to_s} and #{goal.to_s} not found: Invalid input?"

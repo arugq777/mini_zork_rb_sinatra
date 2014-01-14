@@ -1,13 +1,37 @@
 <doctype 5>
 <html>
   <head>
+  <link rel="stylesheet" type="text/css" href="./stylesheet.css">
+    <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="./js/application.js"></script>
   </head>
   <body>
-    <div id="info"><%= erb(:_info) %></div>
-    <div id="main"><%= erb(:_output) %></div>
-    <div id="exits"><%= erb(:_exits)%></div>
-    <div id="settings"><%= erb(:_settings)%></div>
-    <form action="/" method="post">
-    </form>
+    <div id="wrapper">
+      <div id="inside-wrapper">
+
+        <header>
+        </header>
+        
+        <aside>
+          <div id="info">
+            <%= erb(:info) %>
+          </div>
+        </aside>
+        
+        <div id="main">
+          <%= erb(:main) %>
+        </div>
+        
+        <div style="clear:both;"></div>
+        
+        <footer>
+          <div id="exits">
+            <%= erb(:exits) %>  
+          </div>
+        </footer>
+
+      </div>
+      <div style="clear:both;"></div>
+    </div>
   </body>
 </html>

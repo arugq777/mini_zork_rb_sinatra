@@ -1,0 +1,18 @@
+<div class="exits">
+	<ul>
+    <form id="commandForm" action="/" method="post" >
+      <button type="submit">GO</button> >>
+      <% settings.mzw.map.valid_directions.each do |direction| %>
+        <li>
+          <label>
+          <input name="clicked_command" type ="radio" class = "command" value = "<%= direction.to_s %>"><%= "#{direction.to_s.upcase}"%>
+          </label>
+        </li>
+      <%end%>
+      <li>
+        <label>
+        <input name="clicked_command" type="radio" value="rest" checked>REST</label>
+      </li>
+		</form>
+	</ul>
+</div>

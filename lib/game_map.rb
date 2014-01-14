@@ -3,11 +3,11 @@ require "singleton"
 require "json"
 
 class GameMap
-  include Singleton
-  attr_accessor :rooms, :valid_directions
+  #include Singleton
+  attr_accessor :rooms, :valid_directions, :goal
 
   def initialize
-    @valid_directions = [:south, :west, :north, :east]
+    @valid_directions = [:north, :south, :east, :west ]
     @rooms = {}
     json = File.read("./config/map_config.json")
     @game_map_data = JSON.parse(json)
@@ -60,6 +60,7 @@ class GameMap
     if @rooms[goal].nil?
       puts "ERROR! invalid goal set in map_config.json!"
     else
+      @goal = goal
       @rooms[goal].switch_flag(:goal)
     end
   end

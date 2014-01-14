@@ -10,16 +10,19 @@
         "allow_two_way_corridors":false,
         "turns_between_rest":5,
         "messages":{
+            "start":["\nYou find a gem on the floor, near a strange defunct machine, which seems to have several slots for other gems. These things might be your ticket home.",
+                     "\nThere's a gem on the floor, which you grab without a second thought. Years of gaming have trained you well. The gem had been near a strange machine, which lays silent.",
+                     "\nYou have no idea where you are, or how you got here, but there's a gem on the floor. Maybe it will get you home somehow. Even if it doesn't, there can't be any harm in grabbing random things that are just lying around, right?"],
             "lose1":["\nThe grue sneaks up behind you",
                      "\nThe grue emerges from the darkness",
                      "\nThe grue is here"],
             "lose2":[", and tears you limb from limb, which is actually a little better than being anywhere near the burnt sienna room.",
-                    "! By the time you notice the serrated fangs in your neck, it's already too late.",
-                    ", bringing its razor-sharp claws and ravenous appetite. You aren't much of a match for either of those things on their own, much less together...",
-                    "! There isn't even time for your life to flash before your eyes--just the flash of a wide rictus opening in the darkness."],
-            "win" :["\nYou place the gems into the machine, and a portal opens. You're unsure if it actually goes home or not, but you are sure that you hate burnt sienna and unseen creatures lurking in the darkness. There is no hesitation as you walk through.",
-                    "\nThe gems you've collected begin to glow brightly after being placed in the machine. A circle of solid lightning appears before you, drawing your molecules and consciousness into it. This might not be the way home, but it also seems to be the only option.",
-                    "\nAs you enter the room, the machine takes your collected gems and combines them into a a large crystalline automaton, which picks you up and fires you from its large crystalline arm-cannon. Oh, this will be a story to tell the grandkids--assuming: \n\t1) You survive.\n\t2) This actually gets you home.\n\t3) Crystalline arm cannon radiation doesn't render you sterile."]
+                     "! By the time you notice the serrated fangs in your neck, it's already too late.",
+                     ", bringing its razor-sharp claws and ravenous appetite. You aren't much of a match for either of those things on their own, much less together...",
+                     "! There isn't even time for your life to flash before your eyes--just the flash of a wide rictus opening in the darkness."],
+            "win"  :["\nYou place the gems into the machine, and a portal opens. You're unsure if it actually goes home or not, but you are sure you hate burnt sienna and unseen creatures lurking in the darkness. There is no hesitation as you walk through.",
+                     "\nThe gems you've collected begin to glow brightly after being placed in the machine. A circle of solid lightning appears before you, drawing your molecules and consciousness into it. This might not be the way home, but it also seems to be the only option.",
+                     "\nAs you enter the room, the machine takes your collected gems and combines them into a large crystalline automaton, which picks you up and fires you from its large crystalline arm-cannon. Oh, this will be a story to tell the grandkids--assuming: \n\t1) You survive.\n\t2) This actually gets you home.\n\t3) Crystalline arm cannon radiation doesn't render you sterile."]
         }
     },
 
@@ -27,10 +30,10 @@
         "room": "emerald",
         "inventory":{"gems":1},
         "stats":{"rest_countdown":5},
-        "settings":{"gem_sense" :true,
-                    "grue_sense":true,
-                    "goal_sense":true,
-                    "clairvoyance":true},
+        "settings":{"gem_sense"   :true,
+                    "grue_sense"  :true,
+                    "goal_sense"  :true,
+                    "clairvoyance":true  },
         "messages":{
             "rest":["\nAll of this transdimensional extraterrestrial spelunking is getting to you. A brief rest is unanimously decided upon (by your legs--they both voted (the rest of your body never even bothered to register)).",
                     "\nAre gems supposed to be this heavy? Are grues supposed to be this scary? It's all too much! You need to take a breather.",

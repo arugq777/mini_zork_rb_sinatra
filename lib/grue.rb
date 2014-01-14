@@ -1,21 +1,20 @@
-require "singleton"
+#require "singleton"
 require "./lib/room_occupant"
 require "./lib/game_map"
 require "./lib/path"
 require "./lib/player"
 
 class Grue < RoomOccupant
-  include Singleton
-  attr_accessor :path, :messages
 
-  def initialize
+  attr_accessor :path, :messages, :fled_this_turn
+
+  def initialize(start, destination)
     json = File.read("./config/game_config.json")
     settings = JSON.parse(json)
 
-    room = settings["grue_settings"]["room"].downcase.to_sym
-    super(room, :grue)
+    super(start, :grue)
     
-    @path = Path.new(@room.color, Player.instance.is_in_room)
+    @path = Path.new(@room.color, destination)
 
     @messages = {}
     settings["grue_settings"]["messages"].each do |key,value|
@@ -24,33 +23,24 @@ class Grue < RoomOccupant
 
   end
 
-  def randomize_start
-    super(:grue)
-    @path = Path.new(@room.color, Player.instance.is_in_room)
-    @path.get_route
-  end
-
-  def move
-    # if @settings[:session_logs]
-    #   unless @path.route[0] == @room
-    #     #log "warning: path[0] does not match current room"
-    #   end
-    #   game_map.rooms[@room].exits.each do |exit|
-    #     if exit.to_room == @path.route[1]
-    #       #log info: grue moves #{exit.to_direction} from #{exit.from_room} to #{exit.to_room}
-    #     end
-    #   end
-    # end
+  def move(destination)
     set_room(@path.route[1], :grue)
-    @path = Path.new(@room.color, Player.instance.is_in_room)
+    @path = Path.new(@room.color, destination)
     @path.get_route
+    msg = "[grue moves to #{@room.color}. Current route: #{@path.route}]"
+    msg
   end
 
-  def flee
+  def flee(player)
     @@map.rooms[@room.color].gems += 1
     @@map.rooms[@room.color].switch_flag(:loot, value: true)
-    #or maybe something else, like: move; fled_this_turn = true;
-    @path.route[1] = @room.exits.sample.to_room
-    puts @messages[:flee].sample
+
+    until @path.route[1] != player.room.color
+      @path.route[1] = @room.exits.sample.to_room
+    end
+    
+    move(@path.route[1])
+    @fled_this_turn = true
+    @messages[:flee].sample
   end
 end

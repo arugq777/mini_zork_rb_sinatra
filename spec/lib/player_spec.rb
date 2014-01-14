@@ -2,7 +2,7 @@ require "spec_helper"
 require "player"
 
 describe Player do
-  p = Player.instance
+  p = Player.new(:emerald)
   it "should be in a room" do
     p.room.should_not == nil
     p.room.should be_a(Room)
@@ -13,5 +13,11 @@ describe Player do
     GameMap.instance.rooms[p.room.color].should_not == nil
   end
 
-  
+  it "should be able to move in a valid direction" do
+    p.move(:north).should == false
+    p.move(:west ).should == true
+    p.room.color.should == :cobalt
+    p.room.color.should_not == nil
+    p.room.color.should_not == :emerald
+  end
 end

@@ -1,0 +1,21 @@
+  Exits: 
+      <%= "settings.mzw.player.room.color: #{settings.mzw.player.room.color.to_s.upcase}" %><br>
+    <%= "@mzw2.player.room.color: #{@mzw2.player.room.color.to_s.upcase}" %><br>
+          <%= "settings.mzw gems: #{settings.mzw.player.inventory[:gems]}" %><br>
+    <%= "@mzw2 gems: #{@mzw2.player.inventory[:gems]}" %><br>
+  <ul>
+    <form id="commandForm" action="/move" method="post" >
+      <%= "@mzw2.grue.room.color: #{@mzw2.grue.room.color.to_s}"%>
+      <% @mzw2.player.room.exits.each do |exit| %>
+        <li>
+          <label>
+          <input name="clicked_command" type ="radio" class = "command" value = "<%= exit.from_direction.to_s %>"><%= "#{exit.from_direction.to_s.capitalize}"%>
+          </label>
+        </li>
+      <%end%>
+      <li>
+        <label><input name="clicked_command" type="radio" value="rest" checked>Rest</label>
+      </li>
+      <button type="submit">Go</button>
+    </form>
+  </ul>

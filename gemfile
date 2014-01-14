@@ -5,6 +5,6 @@ gem 'sinatra-partial'
 gem 'rubytree'
 
 
-gem 'spork'
-gem 'rspec-core'
-gem 'watchr'
+# gem 'spork'
+# gem 'rspec-core'
+# gem 'watchr'

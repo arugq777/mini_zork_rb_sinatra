@@ -19,11 +19,6 @@ class Room
 
     @gems = options[:gems] || 0
     @flags[:loot] = @gems > 0
-
-    # Hmm, I should probably change this, since I found better ways to set all the other room flags.
-    # if options[:flags] == "goal"
-    #   @flags[:goal] = true
-    # end
   end
 
 def switch_flag(flag, options = {})
