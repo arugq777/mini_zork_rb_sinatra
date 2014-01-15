@@ -154,7 +154,7 @@ class MiniZork
       loot = "GEMS can be found in: "
       @map.rooms.each_value do |room| 
         if room.flags[:loot]
-          loot += room.color.to_s.capitalize + " [#{room.gems}]"
+          loot += room.color.to_s.capitalize + " [#{room.gems}] "
         end
       end
       @info_hash[:clairvoyance] = {
