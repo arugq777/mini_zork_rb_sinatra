@@ -34,8 +34,8 @@ class GameMap
     set_goal(@game_map_data["goal"].to_sym)
 
     # check the rooms hash for any two-way corridors. 
-    # This prints a message if it finds one, but leaves it up to the user to 
-    # modify map_config.json
+    # This prints a message if it finds one, but currently 
+    # leaves it up to the user to modify map_config.json
     @rooms.each_key do |from_room|
       @rooms[from_room].exits.each do |from_exit|
         @rooms[from_exit.to_room].exits.each do |to_exit|

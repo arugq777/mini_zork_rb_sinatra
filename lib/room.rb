@@ -52,13 +52,15 @@ def switch_flag(flag, options = {})
   #   has_exits?
   #   has_entrances?
   # end
+  # makes sure exits are between two valid rooms, and go two valid directions
   # def valid_exits
   #   @exits.each do |exit|
-  #     unless @valid_directions.include?(exit.to_direction) && 
+  #     if @valid_directions.include?(exit.to_direction) && 
   #            @valid_directions.include?(exit.from_direction) &&
   #            @rooms.include?(exit.to_room) &&
   #            @rooms.include?(exit.from_room)
-  #       exits.delete(exit)
+  #     else
+  #       @exits.delete(exit)
   #       #log info: invalid exit deleted
   #     end
   #   end
@@ -67,8 +69,18 @@ def switch_flag(flag, options = {})
   #   if @exits.empty?
   #     #log error: room has no exits
   #     @flags[:valid] = false
+  #     return false
+  #   else
+  #     return true
   #   end
   # end
+  #
   # def has_entrances?(game_map)
+  #   game_map.rooms.each_value do |room|
+  #     room.exits.each do |exit|
+  #       return true if exit.to_room = @color
+  #     end
+  #   end
+  #   return false
   # end
 end

@@ -17,7 +17,6 @@ class MiniZork
 
   @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, 
             :turns, :l, :look]
-  @@game = [:q, :quit] #:restart
   @@output_order = [:move, :grue_flees, :loot, :rest, :start, :look, 
                     :sense, :exits, :grue_move, :lose, :win]
   @@info_order = [:turns, :moves, :inventory, :rest_countdown]
@@ -91,8 +90,9 @@ class MiniZork
     @output_hash = {}
     @output_hash[:start] = @messages[:start].sample
     @output_hash[:look]  = @player.look
-    @output_hash[:sense] = @player.sense(@settings[:gems_required])
+    @output_hash[:sense] = @player.sense(@settings[:gems_required], @grue)
     @output_hash[:exits] = @player.list_exits 
+    @output_hash[:loot]  = @player.get_loot
     @info_hash = update_info_hash
   end
 
@@ -107,8 +107,6 @@ class MiniZork
             @output_hash[:grue_flees] << "[grue flees to #{@grue.room.color}. Current route: #{@grue.path.route}"
           end
         end
-      else
-        @output_hash[:move] = "There is no exit to the #{command.to_s.upcase}!"
       end
       @output_hash[:loot] = @player.get_loot
       if @player.room.is_goal? && victory_conditions_met?
@@ -149,6 +147,8 @@ class MiniZork
   def update_info_hash
     @info_hash = {} 
     @info_hash[:player] = @player.stats
+    #I'll turn this into a seperate hash if I decide to expand inventory options.
+    @info_hash[:player][:inventory] = @player.inventory
     if @player.has_clairvoyance?
       path = Path.new(@player.room.color, @map.goal)
       loot = "GEMS can be found in: "
@@ -158,9 +158,9 @@ class MiniZork
         end
       end
       @info_hash[:clairvoyance] = {
-        grue: "GRUE is in: #{@grue.room.color.to_s.capitalize}",
+        grue: "GRUE is in #{@grue.room.color.to_s.upcase}",
         grue_path: "Current path: #{@grue.path.route}",
-        goal: "GOAL is in #{@map.goal.to_s.capitalize}",
+        goal: "GOAL is in #{@map.goal.to_s.upcase}",
         goal_path: "Path to GOAL: #{path.route}",
         loot: loot
       } 
@@ -178,6 +178,7 @@ class MiniZork
     @output_hash[:lose] =  @messages[:lose1].sample + @messages[:lose2].sample
     @output_hash[:lose] += " [YOU LOSE.]"
     @game_over = true
+    @player.stats[:alive] = false
   end
 
   def you_win
@@ -195,7 +196,7 @@ class MiniZork
       @output_hash[:grue_move] = @grue.move(@player.room.color)
       you_lose if @grue.room.has_player?
     end
-    @output_hash[:sense] = @player.sense(@settings[:gems_required])
+    @output_hash[:sense] = @player.sense(@settings[:gems_required], @grue)
     update_info_hash
   end
 
@@ -245,7 +246,9 @@ class MiniZork
         rest #duh.
       else 
         execute_command(command)
-        unless @output_hash[:move] == false || @output_hash[:move] == nil
+        if @output_hash[:move] == false
+          puts "There is no exit to the #{command.to_s.upcase}!"
+        else
           end_turn
         end
       end

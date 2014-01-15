@@ -26,25 +26,9 @@ class Player < RoomOccupant
       @messages[message_type.to_sym] = txt
     end
 
-    #room = settings["player_settings"]["room"].downcase.to_sym
     super(room, :player)
   end
 
-  # def move(direction)
-  #   possible_directions = {}
-  #   @@map.rooms[@room.color].exits.each do |exit|
-  #     possible_directions[exit.from_direction] = exit.to_room
-  #   end
-  #   if possible_directions.has_key?(direction)
-  #     set_room(possible_directions[direction], :player)
-  #   else
-  #     puts "There is no exit in that direction. Try again."
-  #     return false
-  #   end
-  #   get_loot
-  #   @stats[:moves] += 1
-  #   return true
-  # end
 
   def move(direction)
     move_msg = ""
@@ -80,57 +64,40 @@ class Player < RoomOccupant
     exits_array
   end
 
-  # def look(gems_required)
-  #   sense(gems_required)
-
-  #   print "\nYou are in the "
-  #   @room.color.to_s.split.each {|word| print word.capitalize + " "} 
-  #   puts "Room. #{@room.description}"
-
-  #   print "\nExits: "
-  #   (0..(@room.exits.length-2)).each do |x| 
-  #     print @room.exits[x].from_direction.to_s.capitalize + ", "
-  #   end
-  #   puts "and " + @room.exits.last.from_direction.to_s.capitalize + "."
-  # end
-
   def look
     look_msg = "You are in the "
     @room.color.to_s.split.each {|word| look_msg += word.capitalize + " "} 
     look_msg += "Room. #{@room.description}"
+    if @room.is_goal?
+      look_msg += "\nThere is a box in this room, connected to a large apparatus. The apparatus itself is indiscerible in the darkness, but the box has conveniently GEM-shaped slots."
+    end
     look_msg
   end
 
-  # def sense(gems_required)
-  #   @room.exits.each do |exit|
-  #     case 
-  #     when has_gem_sense? && @@map.rooms[exit.to_room].has_loot?
-  #       puts @messages[:gem].sample + " [A gem is near.]"
-  #     when has_goal_sense? && @@map.rooms[exit.to_room].is_goal?
-  #       if gems_required < @inventory[:gems]
-  #         puts @messages[:goal].sample + " [The goal is near.]"
-  #       end
-  #     when has_grue_sense? && @@map.rooms[exit.to_room].has_grue?
-  #       puts @messages[:grue].sample + " [You are likely to be eaten by a grue.]"
-  #     end
-  #   end
-  # end
-
-  def sense (gems_required)
+  def sense (gems_required, grue)
     sense_msg = []
+    #check for stuff from player's position
     @room.exits.each do |exit|
       case 
       when has_gem_sense? && @@map.rooms[exit.to_room].has_loot?
-        sense_msg << @messages[:gem].sample + " [A gem is near.]"
+        sense_msg << @messages[:gem].sample + " [A GEM is near.]"
       when has_goal_sense? && @@map.rooms[exit.to_room].is_goal?
         if gems_required < @inventory[:gems]
-          sense_msg << @messages[:goal].sample + " [The goal is near.]"
+          sense_msg << @messages[:goal].sample + " [The GOAL is near.]"
         end
       when has_grue_sense? && @@map.rooms[exit.to_room].has_grue?
-        sense_msg << @messages[:grue].sample + " [You are likely to be eaten by a grue.]"
+        sense_msg << @messages[:grue].sample + " [The GRUE is near.]"
       end
     end
-    sense_msg
+    #since corridors are one way, have grue_sense check proximity from grue's position
+    if has_grue_sense?
+      grue.room.exits.each do |exit|
+        if @@map.rooms[exit.to_room].has_player?
+          sense_msg << "You are likely to be eaten by a GRUE."
+        end
+      end
+    end
+    sense_msg unless sense_msg.empty?
   end
 
   def see(grue)

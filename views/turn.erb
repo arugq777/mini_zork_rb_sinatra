@@ -1,71 +1,76 @@
-<li id="turn_<%= @mzw2.player.stats[:turns].to_s %>">
-  <% if @mzw2.output_hash[:win] %>
+<!-- Yes, this is messy and stupid. I'll write a helper method later -->
+
+<% @mzw = settings.mzw %>
+<li id="turn_<%= @mzw.player.stats[:turns].to_s %>">
+  <% if @mzw.output_hash[:win] %>
     <div class="win">
-      <p><%= @mzw2.output_hash[:win] %></p>
+      <p><%= @mzw.output_hash[:win] %></p>
     </div>
   <% end %>
 
-  <% if @mzw2.output_hash[:lose] %>
+  <% if @mzw.output_hash[:lose] %>
     <div class="lose">
-      <p><%= @mzw2.output_hash[:lose] %></p>
+      <p><%= @mzw.output_hash[:lose] %></p>
     </div>
   <% end %>
 
-  <% if @mzw2.output_hash[:grue_move] %>
+  <% if @mzw.output_hash[:grue_move] %>
     <div class="grue_move">
-      <p><%= @mzw2.output_hash[:grue_move] %></p>
+      <p><%= @mzw.output_hash[:grue_move] %></p>
     </div>
   <% end %>
-
-  <% if @mzw2.output_hash[:rest] %>
+  <% if @mzw.output_hash[:rest] %>
     <div class="rest">
-      <p><%= @mzw2.output_hash[:rest] %></p>
+      <p><%= @mzw.output_hash[:rest] %></p>
     </div>
   <% else %>
-    <div class="look <%= @mzw2.player.room.color.to_s.delete(' ') %>">
-      <div class="start">
-        <p><%= @mzw2.output_hash[:start] unless nil %></p>
-      </div>
+    <% unless @mzw.game_over %>
+      <div class="look <%= @mzw.player.room.color.to_s.delete(' ') %>">
+        <div class="start">
+          <p><%= @mzw.output_hash[:start] unless nil %></p>
+        </div>
 
-      <div class="room_description">
-        <p><%= @mzw2.output_hash[:look] %></p>
-      </div>
+        <div class="room_description">
+          <p><%= @mzw.output_hash[:look] %></p>
+        </div>
 
-      <div class="sense">
-        <ul>
-        <% @mzw2.output_hash[:sense].each do |sense| %>
-          <li><%= sense %></li>
-        <% end %>
-        </ul>
+        <div class="sense">
+          <ul>
+            <% unless @mzw.output_hash[:sense].nil? %>
+              <% @mzw.output_hash[:sense].each do |sense| %>
+                <li><%= sense %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+        <div class="exits">
+          <p>EXITS: 
+            <% @mzw.output_hash[:exits].each do |exit| %>
+              <%= exit.upcase %> 
+            <% end %>
+          </p>
+        </div>
       </div>
-      <div class="exits">
-        <p>EXITS: 
-          <% @mzw2.output_hash[:exits].each do |exit| %>
-            <%= exit.upcase %> 
-          <% end %>
-        </p>
-      </div>
-    </div>
+    <% end %>
   <% end %>
 
-  <% if @mzw2.output_hash[:loot] %>
+  <% if @mzw.output_hash[:loot] %>
     <div class="loot">
-      <p>* <%= @mzw2.output_hash[:loot] %> *</p>
+      <p>* <%= @mzw.output_hash[:loot] %> *</p>
     </div>
   <% end %>
 
-  <% if @mzw2.output_hash[:grue_flees] %>
+  <% if @mzw.output_hash[:grue_flees] %>
     <div class="grue_flees">
-      <% @mzw2.output_hash[:grue_flees].each do |msg| %>
+      <% @mzw.output_hash[:grue_flees].each do |msg| %>
         <p><%= msg %></p>
       <% end %>
     </div>
   <% end %>
 
-  <% if @mzw2.output_hash[:move] %>
+  <% if @mzw.output_hash[:move] %>
     <div class="move">
-      <p> <%= @mzw2.output_hash[:move] %> </p>
+      <p> <%= @mzw.output_hash[:move] %> </p>
     </div>
   <% end %>
-
 </li>

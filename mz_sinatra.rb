@@ -1,3 +1,6 @@
+require "rubygems"
+gem "rubytree", "0.8.3"
+
 require "./lib/minizork"
 require "sinatra"
 require "sinatra/partial"
@@ -22,8 +25,7 @@ class MiniZorkApp < Sinatra::Base
 
   get '/' do
     reset
-    @mzw2 = settings.mzw
-    erb :index, locals:{mzw2:@mzw2}
+    erb :index
   end
 
   post '/' do
@@ -34,9 +36,7 @@ class MiniZorkApp < Sinatra::Base
         @msg = "There is no exit to the #{command.to_s.upcase}!"
         erb :invalid_move, locals: {msg: @msg}
       else
-        @mzw2 = settings.mzw
-        #@exits = erb :exits
-        erb :turn, locals: {mzw2: @mzw2}
+        erb :turn
       end
     end
   end

@@ -3,7 +3,6 @@ class RoomOccupant
   attr_accessor :room
 
   def initialize(room, flag, options = {})
-    #@@map = GameMap.instance
     @room = @@map.rooms[room]
     @@map.rooms[room].switch_flag(flag)
   end
