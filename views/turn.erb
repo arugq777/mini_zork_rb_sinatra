@@ -37,7 +37,7 @@
         <div class="sense">
           <ul>
             <% unless @mzw.output_hash[:sense].nil? %>
-              <% @mzw.output_hash[:sense].each do |sense| %>
+              <% @mzw.output_hash[:sense].each_value do |sense| %>
                 <li><%= sense %></li>
               <% end %>
             <% end %>

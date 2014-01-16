@@ -7,13 +7,13 @@ class Player < RoomOccupant
     @settings = {}
     @inventory = {}
     @messages = {}
-    @stats = {alive: true, turns: 1, moves: 0, rest_countdown: nil}
+    @stats = {alive: true, turns: 1, moves: 0, rest_countdown: -1}
 
     json = File.read("./config/game_config.json")
     
     settings = JSON.parse(json)
 
-    @stats[:rest_countdown] = settings["player_settings"]["stats"]["rest_countdown"]
+    @stats[:rest_countdown] += settings["player_settings"]["stats"]["rest_countdown"]
     settings["player_settings"]["settings"].each do |key, bool|
       @settings[key.downcase.to_sym] = bool
     end
@@ -75,25 +75,25 @@ class Player < RoomOccupant
   end
 
   def sense (gems_required, grue)
-    sense_msg = []
+    sense_msg = {}
     #check for stuff from player's position
     @room.exits.each do |exit|
       case 
       when has_gem_sense? && @@map.rooms[exit.to_room].has_loot?
-        sense_msg << @messages[:gem].sample + " [A GEM is near.]"
+        sense_msg[:gem] = @messages[:gem].sample + " [A GEM is near.]"
       when has_goal_sense? && @@map.rooms[exit.to_room].is_goal?
-        if gems_required < @inventory[:gems]
-          sense_msg << @messages[:goal].sample + " [The GOAL is near.]"
+        if gems_required <= @inventory[:gems]
+          sense_msg[:goal] = @messages[:goal].sample + " [The GOAL is near.]"
         end
       when has_grue_sense? && @@map.rooms[exit.to_room].has_grue?
-        sense_msg << @messages[:grue].sample + " [The GRUE is near.]"
+        sense_msg[:grue] = @messages[:grue].sample + " [The GRUE is near.]"
       end
     end
     #since corridors are one way, have grue_sense check proximity from grue's position
     if has_grue_sense?
       grue.room.exits.each do |exit|
         if @@map.rooms[exit.to_room].has_player?
-          sense_msg << "You are likely to be eaten by a GRUE."
+          sense_msg[:grue_likely] = "You are likely to be eaten by a GRUE."
         end
       end
     end

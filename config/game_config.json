@@ -42,7 +42,7 @@
             "grue":["\nOut of the corner of your eye, you sense movement in one of the passages. Whatever it was may still be there...",
                     "\nIt may just be you, but something in one of the nearby rooms smells odd.",
                     "\nIn one of the nearby rooms, you hear faint shuffling and scraping noises."],
-            "gem" :["\nUpon entering this room, your gem begins to glow and hum. Something in a nearby room hums back in harmony."],
+            "gem" :["\nUpon entering this room, your GEM begins to glow and hum. Something in a nearby room hums back in harmony."],
             "goal":["\nThere's a crackling of energy nearby--the hairs on the back of your neck begin to stand on end.", 
                     "\nYou hear machinery clanking; the gems in your pocket hum audibly.",
                     "\nThe gems in your pocket almost seem to be gravitating toward a nearby room."]
