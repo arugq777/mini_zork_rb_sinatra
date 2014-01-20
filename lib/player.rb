@@ -3,28 +3,31 @@ require "./lib/room_occupant"
 class Player < RoomOccupant
   attr_accessor :stats, :inventory, :settings, :path_to_goal
 
-  def initialize(room)
+  def initialize(room, settings)
     @settings = {}
     @inventory = {}
     @messages = {}
     @stats = {alive: true, turns: 1, moves: 0, rest_countdown: -1}
 
-    json = File.read("./config/game_config.json")
+    # json = File.read("./config/game_config.json")
     
-    settings = JSON.parse(json)
+    # settings = JSON.parse(json)
 
-    @stats[:rest_countdown] += settings["player_settings"]["stats"]["rest_countdown"]
-    settings["player_settings"]["settings"].each do |key, bool|
-      @settings[key.downcase.to_sym] = bool
-    end
+    @stats[:rest_countdown] += settings[:stats][:rest_countdown]
+    @settings = settings[:settings]
+    @inventory = settings[:inventory]
+    @messages = settings[:messages]
+    # settings["player"]["settings"].each do |key, bool|
+    #   @settings[key.downcase.to_sym] = bool
+    # end
 
-    settings["player_settings"]["inventory"].each do |item, amt|
-      @inventory[item.downcase.to_sym] = amt
-    end
+    # settings["player"]["inventory"].each do |item, amt|
+    #   @inventory[item.downcase.to_sym] = amt
+    # end
 
-    settings["player_settings"]["messages"].each do |message_type,txt|
-      @messages[message_type.to_sym] = txt
-    end
+    # settings["player"]["messages"].each do |message_type,txt|
+    #   @messages[message_type.to_sym] = txt
+    # end
 
     super(room, :player)
   end

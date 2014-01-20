@@ -1,0 +1,23 @@
+- @stats = settings.mzw.info_hash[:player]
+- @cv = settings.mzw.info_hash[:clairvoyance]
+.stats
+  %div
+    Turn: #{@stats[:turns]}
+  %div
+    Moves: #{@stats[:moves]}
+  %div
+    Gems: #{@stats[:inventory][:gems]} of #{settings.mzw.settings[:gems_required]}
+  %div
+    Rest in #{@stats[:rest_countdown]} turns
+- unless @cv.nil?
+  .clairvoyance
+    .grue_room
+      = @cv[:grue]
+    .grue_path
+      = @cv[:grue_path]
+    .goal_room
+      = @cv[:goal]
+    .goal_path
+      = @cv[:goal_path]
+    .loot
+      = @cv[:loot]

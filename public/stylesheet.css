@@ -90,6 +90,13 @@ button{
 	border-width: 20px;
 }
 
+.look{
+	border-style: none;
+	-moz-box-shadow: 10px 10px rgba(120,120,120,0.5);
+	-webkit-box-shadow: 10px 10px rgba(120,120,120,0.5);
+	box-shadow: 10px 10px rgba(120,120,120,0.5);	
+}
+
 .lose {
 	border-color: #f00;
 	color: #f00;
@@ -114,12 +121,21 @@ button{
 	color: #0f0;
 }
 
-.move, .invalid_move, .loot {
+.move, .invalid_move, #turns .loot, #loading {
 	text-align: center;
+}
+
+#loading{
+	display:none;
+	color: #fff;
 }
 
 #turns li div{
 	margin: 10px;
+}
+
+select, option{
+	font-family: "Green Screen";
 }
 
 .aquamarine {

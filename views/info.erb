@@ -3,26 +3,16 @@
 <div class="stats">
   <div>Turn: <%= @stats[:turns] %></div>
   <div>Moves: <%= @stats[:moves] %></div>
-  <div>Gems: <%= @stats[:inventory][:gems] %> of <%= settings.mzw.settings[:gems_required] %>
+  <div>Gems: <%= @stats[:inventory][:gems] %> of <%= settings.mzw.game_settings[:gems_required] %>
   </div>
   <div>Rest in <%= @stats[:rest_countdown] %> turns</div>
 </div>
 <% unless @cv.nil? %>
   <div class="clairvoyance">
-    <div class="grue_room">
-      <%= @cv[:grue] %>
+  <% [:grue, :grue_path, :goal, :goal_path, :loot].each do |vision| %>
+    <div class="<%= vision.to_s  %>">
+      <%= @cv[vision] %>
     </div>
-    <div class="grue_path">
-      <%= @cv[:grue_path] %>
-    </div>
-    <div class="goal_room">
-      <%= @cv[:goal] %>
-    </div>
-    <div class="goal_path">
-      <%= @cv[:goal_path] %>
-    </div>
-    <div class="loot">
-      <%= @cv[:loot] %>
-    </div>
+  <% end %>
   </div>
 <% end %>

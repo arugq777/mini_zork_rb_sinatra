@@ -1,1 +1,36 @@
-settings
+<form>
+  <% loop_hash = {randomize_player_start: :player, 
+                  randomize_grue_start:   :grue,
+                  randomize_goal:         :goal } %>
+  <% loop_hash.each do |cb_id, select_id| %>
+  <div class="<%= select_id.to_s%>">
+    <input 
+      type="checkbox" 
+      name="<%= cb_id.to_s %>"
+      class="room_setting_cb" 
+      <%= 'checked="checked"' if settings.mzw.game_settings[cb_id] %>
+    >
+    <label>
+      <%= cb_id.to_s %>
+    </label><br>
+    <label>
+      <%= "#{select_id.to_s.capitalize} room >> " %>
+    </label>
+    <select 
+      name="<%= select_id.to_s + "_room" %>" 
+      class="room_select" 
+      <%= 'disabled="disabled"' if settings.mzw.game_settings[cb_id] %>
+    >
+      <% settings.mzw.map.rooms.each_key do |key| %>
+        <option 
+          value="<%= key.to_s.delete(' ') %>" 
+          class="<%= key.to_s.delete(' ') %>"
+          <%= 'selected="selected"' if settings.mzw.map.rooms[key].flags[select_id] %>
+        >
+          <%= key.to_s.capitalize %>
+        </option>
+      <% end %>
+    </select>
+  </div>
+  <% end %>
+</form>

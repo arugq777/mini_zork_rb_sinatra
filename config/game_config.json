@@ -1,11 +1,11 @@
 {
-    "game_settings":{
+    "game":{
         "prompt": ">> ",
         "gems_required":6,
         "random_gems":true,
         "random_gem_chance":5,
         "randomize_goal":true,
-        "randomize_player_start":true,
+        "randomize_player_start":false,
         "randomize_grue_start":true,
         "allow_two_way_corridors":false,
         "turns_between_rest":5,
@@ -26,7 +26,9 @@
         }
     },
 
-    "player_settings":{ 
+    "goal":{"room":"violet"},
+
+    "player":{ 
         "room": "emerald",
         "inventory":{"gems":1},
         "stats":{"rest_countdown":5},
@@ -49,7 +51,7 @@
         }
     },
 
-    "grue_settings":{ 
+    "grue":{ 
         "room":"cobalt", 
         "messages":{
             "flee":["\nAs you enter, a strange creature scurries off to a nearby room!",

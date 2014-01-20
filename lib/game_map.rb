@@ -1,37 +1,34 @@
 require "./lib/room"
-require "singleton"
 require "json"
 
 class GameMap
-  #include Singleton
   attr_accessor :rooms, :valid_directions, :goal
 
-  def initialize
+  def initialize(input)
     @valid_directions = [:north, :south, :east, :west ]
     @rooms = {}
-    json = File.read("./config/map_config.json")
-    @game_map_data = JSON.parse(json)
+    #json = File.read("./config/map_config.json")
+    game_map_data = JSON.parse(input, symbolize_names: true)
 
     #setup the map, which is a hash of Room objects
-    @game_map_data["rooms"].each do |room|
+    game_map_data[:rooms].each do |room|
       exit_array = []
-      @game_map_data["exits"].each do |exit|
-        if exit["from_room"] == room["color"]
+      game_map_data[:exits].each do |exit|
+        if exit[:from_room] == room[:color]
           exit_array << Room::Exit.new(
-            exit["from_room"].downcase.to_sym, 
-            exit["from_direction"].downcase.to_sym, 
-            exit["to_room"].downcase.to_sym, 
-            exit["to_direction"].downcase.to_sym )
+            exit[:from_room].downcase.to_sym, 
+            exit[:from_direction].downcase.to_sym, 
+            exit[:to_room].downcase.to_sym, 
+            exit[:to_direction].downcase.to_sym )
         end
       end
-      @rooms[room["color"].to_sym] = Room.new(
-        room["color"], 
-        room["adjective"], 
+      @rooms[room[:color].to_sym] = Room.new(
+        room[:color], 
+        room[:adjective], 
         exit_array, 
-        description: room["description"],
-        gems: room["gems"] )
+        description: room[:description],
+        gems: room[:gems] )
     end
-    set_goal(@game_map_data["goal"].to_sym)
 
     # check the rooms hash for any two-way corridors. 
     # This prints a message if it finds one, but currently 

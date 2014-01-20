@@ -8,19 +8,10 @@ class Grue < RoomOccupant
 
   attr_accessor :path, :messages, :fled_this_turn
 
-  def initialize(start, destination)
-    json = File.read("./config/game_config.json")
-    settings = JSON.parse(json)
-
+  def initialize(start, destination, settings)
     super(start, :grue)
-    
     @path = Path.new(@room.color, destination)
-
-    @messages = {}
-    settings["grue_settings"]["messages"].each do |key,value|
-      @messages[key.downcase.to_sym] = value
-    end
-
+    @messages = settings[:messages]
   end
 
   def move(destination)

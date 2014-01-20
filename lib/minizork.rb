@@ -6,7 +6,7 @@ require "./lib/game_map"
 require "json"
 
 class MiniZork
-  attr_accessor :settings, :messages, :restart, :game_over, :quit,
+  attr_accessor :game_settings, :all_settings, :messages, :restart, :game_over, :quit,
                 :player, :map, :grue, :goal, :output_hash, :info_hash
 
   @@commands =[:south, :west, :north, :east,
@@ -35,51 +35,45 @@ class MiniZork
     RoomOccupant.set_map(@map)
 
     start_room = initialize_starting_positions
-    @player = Player.new(start_room[:player])
-    @grue = Grue.new(start_room[:grue], start_room[:player])
+    @player = Player.new(start_room[:player], @all_settings[:player])
+    @grue = Grue.new(start_room[:grue], start_room[:player], @all_settings[:grue])
     starting_output
   end
 
   def import_settings_from_json
-    @settings = {}
-    @messages = {}
-    #import settings from JSON
     json = File.read("./config/game_config.json")
-    game_config = JSON.parse(json)
-
-    game_config["game_settings"].each_key do |setting|
-      if setting.downcase.to_sym == :messages
-        game_config["game_settings"][setting].each do |type, text|
-          @messages[type.downcase.to_sym] = text
-        end
-      else
-        @settings[setting.downcase.to_sym] = game_config["game_settings"][setting]
-      end
-    end
+    @all_settings = JSON.parse(json, symbolize_names: true)
+    @game_settings = @all_settings[:game]
+    @messages = @all_settings[:game][:messages]
   end
 
   def import_map_from_json
-    @map = GameMap.new
-    @map.random_gems(@settings[:random_gem_chance]) if @settings[:random_gems]
-    @map.randomize_goal if @settings[:randomize_goal]
+    json = File.read("./config/map_config.json")
+    @map = GameMap.new(json)
+    @map.random_gems(@game_settings[:random_gem_chance]) if @game_settings[:random_gems]
+    if @game_settings[:randomize_goal]
+      @map.randomize_goal
+    else
+      @map.set_goal(@all_settings[:goal][:room].downcase.to_sym)
+    end
   end
 
   def initialize_starting_positions
     #initialize starting positions for player & grue
     starting_positions = {}
-    if @settings[:randomize_player_start]
+    if @game_settings[:randomize_player_start]
       player_start_room = @map.rooms.keys.sample
     else
-      player_start_room = game_config["player_settings"]["room"].downcase.to_sym
+      player_start_room = @all_settings[:player][:room].downcase.to_sym
     end 
 
-    if @settings[:randomize_grue_start]
+    if @game_settings[:randomize_grue_start]
       grue_start_room = player_start_room
       until grue_start_room != player_start_room
         grue_start_room = @map.rooms.keys.sample
       end
     else
-      grue_start_room = game_config["grue_settings"]["room"].downcase.to_sym
+      grue_start_room = @all_settings[:grue][:room].downcase.to_sym
     end
     starting_positions[:player] = player_start_room
     starting_positions[:grue] = grue_start_room
@@ -90,7 +84,7 @@ class MiniZork
     @output_hash = {}
     @output_hash[:start] = @messages[:start].sample
     @output_hash[:look]  = @player.look
-    @output_hash[:sense] = @player.sense(@settings[:gems_required], @grue)
+    @output_hash[:sense] = @player.sense(@game_settings[:gems_required], @grue)
     @output_hash[:exits] = @player.list_exits 
     @output_hash[:loot]  = @player.get_loot
     @info_hash = update_info_hash
@@ -169,7 +163,7 @@ class MiniZork
   end
 
   def rest
-    @output_hash[:rest] =  @player.rest(@settings[:turns_between_rest])
+    @output_hash[:rest] =  @player.rest(@game_settings[:turns_between_rest])
     @output_hash[:rest] += " [You REST for one turn.]"
     end_turn
   end
@@ -196,7 +190,7 @@ class MiniZork
       @output_hash[:grue_move] = @grue.move(@player.room.color)
       you_lose if @grue.room.has_player?
     end
-    @output_hash[:sense] = @player.sense(@settings[:gems_required], @grue)
+    @output_hash[:sense] = @player.sense(@game_settings[:gems_required], @grue)
     update_info_hash
   end
 
@@ -209,7 +203,7 @@ class MiniZork
   end
 
   def victory_conditions_met?
-    @player.inventory[:gems] >= @settings[:gems_required]
+    @player.inventory[:gems] >= @game_settings[:gems_required]
   end
 
   def print_output(print_order, hash_to_print)
