@@ -4,30 +4,13 @@ class Player < RoomOccupant
   attr_accessor :stats, :inventory, :settings, :path_to_goal
 
   def initialize(room, settings)
-    @settings = {}
-    @inventory = {}
-    @messages = {}
-    @stats = {alive: true, turns: 1, moves: 0, rest_countdown: -1}
-
-    # json = File.read("./config/game_config.json")
     
-    # settings = JSON.parse(json)
+    @stats = {alive: true, turns: 1, moves: 0, rest_countdown: -1}
 
     @stats[:rest_countdown] += settings[:stats][:rest_countdown]
     @settings = settings[:settings]
     @inventory = settings[:inventory]
     @messages = settings[:messages]
-    # settings["player"]["settings"].each do |key, bool|
-    #   @settings[key.downcase.to_sym] = bool
-    # end
-
-    # settings["player"]["inventory"].each do |item, amt|
-    #   @inventory[item.downcase.to_sym] = amt
-    # end
-
-    # settings["player"]["messages"].each do |message_type,txt|
-    #   @messages[message_type.to_sym] = txt
-    # end
 
     super(room, :player)
   end
@@ -103,6 +86,8 @@ class Player < RoomOccupant
     sense_msg unless sense_msg.empty?
   end
 
+  #this is used in the console version's look command;
+  #could probably delete this.
   def see(grue)
     puts "GRUE is in " + grue.is_in_room.to_s.capitalize
     puts "It's current route is: #{grue.path.route}"

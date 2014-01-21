@@ -13,18 +13,19 @@ $(document).ready(function(){
         return ! $(this).prop('disabled');
     });
   });
-  //function disableRoomOptions();
-  $(".room_select").change(function(){
-    //enable previously disabled option
-    $(".room_select")
-      .not(this)
-      .find("option")
-      .prop("disabled", false);
-    //disable previously enabled option
-    $(".room_select")
-      .not(this) 
-      .find("option." + $(this).val())
-      .prop("disabled", true);
+
+  var $prs = $(".player .room_select");
+  var $grs = $(".grue .room_select");
+  disableInitialRoomOptions($grs, $prs);
+
+  $prs.change(function(){
+    $grs.find("option").prop("disabled", false);
+    $grs.find("option." + $(this).val()).prop("disabled", true);
+  });
+
+  $grs.change(function(){
+    $prs.find("option").prop("disabled", false);
+    $prs.find("option." + $(this).val()).prop("disabled", true);
   });
 });
 
@@ -71,16 +72,7 @@ function loadingAnimation(){
   }, 2000);
 }
 
-function disableRoomOptions(){
-  var $rs = $(".room_select");
-  $rs.each(function(){
-    //enable previously disabled option
-    $rs.not(this)
-      .find("option")
-      .prop("disabled", false);
-    //disable previously enabled option
-    $rs.not(this) 
-      .find("option." + $(this).val())
-      .prop("disabled", true);
-  });
+function disableInitialRoomOptions(grs, prs){
+  grs.find("option." + prs.val()).prop("disabled", true);
+  prs.find("option." + grs.val()).prop("disabled", true);
 }

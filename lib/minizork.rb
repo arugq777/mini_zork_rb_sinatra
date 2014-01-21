@@ -17,6 +17,7 @@ class MiniZork
 
   @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, 
             :turns, :l, :look]
+
   @@output_order = [:move, :grue_flees, :loot, :rest, :start, :look, 
                     :sense, :exits, :grue_move, :lose, :win]
   @@info_order = [:turns, :moves, :inventory, :rest_countdown]
@@ -133,29 +134,34 @@ class MiniZork
     when :l, :look
       #@player.get_loot
       puts @player.look
-      @player.see(@grue)
+      @player.see(@grue) if @player.has_clairvoyance?
       puts @player.list_exits
     end
   end
 
   def update_info_hash
-    @info_hash = {} 
+    @info_hash, loot, grue_path, goal_path = {},{},{},{} 
     @info_hash[:player] = @player.stats
     #I'll turn this into a seperate hash if I decide to expand inventory options.
     @info_hash[:player][:inventory] = @player.inventory
     if @player.has_clairvoyance?
       path = Path.new(@player.room.color, @map.goal)
-      loot = "GEMS can be found in: "
+      goal_path[:msg] = "Path to GOAL: "
+      goal_path[:list] = path.route      
+      grue_path[:msg] = "Current path: "
+      grue_path[:list] = @grue.path.route
+      loot[:msg] = "GEMS can be found in: "
+      loot[:list] = []
       @map.rooms.each_value do |room| 
         if room.flags[:loot]
-          loot += room.color.to_s.capitalize + " [#{room.gems}] "
+          loot[:list] << room.color.to_s.capitalize + " [#{room.gems}] "
         end
       end
       @info_hash[:clairvoyance] = {
         grue: "GRUE is in #{@grue.room.color.to_s.upcase}",
-        grue_path: "Current path: #{@grue.path.route}",
+        grue_path: grue_path,
         goal: "GOAL is in #{@map.goal.to_s.upcase}",
-        goal_path: "Path to GOAL: #{path.route}",
+        goal_path: goal_path,
         loot: loot
       } 
     end
@@ -227,8 +233,6 @@ class MiniZork
     print_output(@@clairvoyance, @info_hash[:clairvoyance])
     print_output(@@output_order, @output_hash)
   end
-
-
 
   def play(command)
     @grue.fled_this_turn = false

@@ -10,9 +10,20 @@
 <% unless @cv.nil? %>
   <div class="clairvoyance">
   <% [:grue, :grue_path, :goal, :goal_path, :loot].each do |vision| %>
-    <div class="<%= vision.to_s  %>">
-      <%= @cv[vision] %>
-    </div>
+    <% if @cv[vision].is_a?(Hash) %>
+      <div class="<%= vision.to_s  %>">
+        <%= @cv[vision][:msg] %>
+        <ul>
+          <% @cv[vision][:list].each do |x| %>
+            <li><%= x.to_s.capitalize %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <div class="<%= vision.to_s  %>">
+        <%= @cv[vision] %>
+      </div>
+    <% end %>
   <% end %>
   </div>
 <% end %>
