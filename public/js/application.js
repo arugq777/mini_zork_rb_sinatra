@@ -1,14 +1,12 @@
 $(document).ready(function(){
   $("#commandForm").submit(submitMove);
 
-  $(".header").click(function(){
+  $(".heading").click(function(){
     $(this).next(".menu").slideToggle();
   });
 
   $(".room_setting_cb").change(function(){
-    $(this)
-      .parent()
-      .find(".room_select")
+    $("." + $(this).parent().attr("class") + " .room_select")
       .prop("disabled", function(){                             
         return ! $(this).prop('disabled');
     });

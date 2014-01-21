@@ -32,9 +32,9 @@
         "room": "emerald",
         "inventory":{"gems":1},
         "stats":{"rest_countdown":5},
-        "settings":{"gem_sense"   :true,
+        "settings":{"gem_sense"   :false,
                     "grue_sense"  :true,
-                    "goal_sense"  :true,
+                    "goal_sense"  :false,
                     "clairvoyance":true  },
         "messages":{
             "rest":["\nAll of this transdimensional extraterrestrial spelunking is getting to you. A brief rest is unanimously decided upon (by your legs--they both voted (the rest of your body never even bothered to register)).",

@@ -15,9 +15,13 @@ class Grue < RoomOccupant
   end
 
   def move(destination)
-    set_room(@path.route[1], :grue)
-    @path = Path.new(@room.color, destination)
-    @path.get_route
+    # if @path.route.length > 1
+      set_room(@path.route[1], :grue)
+      @path = Path.new(@room.color, destination)
+      @path.get_route
+    # else
+    #   set_room(@path.route[0], :grue)
+    # end
     msg = "[grue moves to #{@room.color}. Current route: #{@path.route}]"
     msg
   end

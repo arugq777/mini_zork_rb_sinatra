@@ -7,9 +7,13 @@ class Path
   def initialize(from_room, to_room)
     @from_room = from_room
     @to_room = to_room
-    @path_tree = Tree::TreeNode.new(from_room, :start)
-    calculate_paths(@path_tree, from_room, to_room)
-    @route = get_route
+    #if from_room != to_room
+      @path_tree = Tree::TreeNode.new(from_room, :start)
+      calculate_paths(@path_tree, from_room, to_room)
+      @route = get_route
+    # else
+    #   @route = [ to_room ]
+    # end
   end 
 
   def self.set_map(map)

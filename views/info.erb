@@ -13,11 +13,11 @@
     <% if @cv[vision].is_a?(Hash) %>
       <div class="<%= vision.to_s  %>">
         <%= @cv[vision][:msg] %>
-        <ul>
+        <ol>
           <% @cv[vision][:list].each do |x| %>
             <li><%= x.to_s.capitalize %></li>
           <% end %>
-        </ul>
+        </ol>
       </div>
     <% else %>
       <div class="<%= vision.to_s  %>">

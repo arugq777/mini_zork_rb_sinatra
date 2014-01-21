@@ -32,7 +32,7 @@ body {
 	padding-top: 20px;
 }
 
-header {
+header, .heading {
 	text-align: center;
 }
 
@@ -41,6 +41,14 @@ aside{
 	float: left;
 	padding-left: 15px;
 	padding-top: 20px;
+}
+.heading{
+	color: #FF0;
+	width: 95%;
+	padding: 10px;
+	margin: 10px 0 10px 0;
+	border: solid 2px;
+	border-color:#ff0;
 }
 
 footer{
@@ -70,7 +78,7 @@ footer ul li{
 	padding: 5px;
 }
 
-footer ul li:hover{
+footer ul li:hover, .heading:hover {
 	background-color:#0f0;
 	color:black;
 }
@@ -134,6 +142,12 @@ button{
 	margin: 10px;
 }
 
+ol, ul {
+	list-style-position:inside;
+}
+#info li{
+	padding-left: 10px;
+}
 select, option{
 	font-family: "Green Screen";
 }

@@ -1,46 +1,105 @@
 <form>
-  <% loop_hash = {randomize_player_start: :player, 
-                  randomize_grue_start:   :grue,
-                  randomize_goal:         :goal } %>
-  <% loop_hash.each do |cb_id, select_id| %>
-  <div class="<%= select_id.to_s%>">
-    <input 
-      type="checkbox" 
-      name="<%= cb_id.to_s %>"
-      class="room_setting_cb" 
-      <%= 'checked="checked"' if settings.mzw.game_settings[cb_id] %>
-    >
-    <label>
-      <%= cb_id.to_s %>
-    </label><br>
-    <label>
-      <%= "#{select_id.to_s.capitalize} room >> " %>
-    </label>
-    <select 
-      name="<%= select_id.to_s + "_room" %>" 
-      class="room_select" 
-      <%= 'disabled="disabled"' if settings.mzw.game_settings[cb_id] %>
-    >
-      <% settings.mzw.map.rooms.each_key do |key| %>
-        <option 
-          value="<%= key.to_s.delete(' ') %>" 
-          class="<%= key.to_s.delete(' ') %>"
-          <%= 'selected="selected"' if settings.mzw.map.rooms[key].flags[select_id] %>
-        >
-          <%= key.to_s.capitalize %>
-        </option>
-      <% end %>
-    </select>
-  </div>
-  <% end %>
-</form>
-turns between rest
-gems required
-randomize gems
-random gem chance
+  <table>
+    <% loop_hash = {randomize_player_start: :player, 
+                    randomize_grue_start:   :grue,
+                    randomize_goal:         :goal } %>
+    <% loop_hash.each do |cb_id, select_id| %>
+      <tr>
+        <td>
+          <label>
+            <%= cb_id.to_s.tr("_"," ").capitalize %>
+          </label>
+        </td>
+        <td class="<%= select_id.to_s%>">
+          <input 
+            type="checkbox" 
+            name="<%= cb_id.to_s %>"
+            class="room_setting_cb" 
+            <%= 'checked="checked"' if settings.mzw.game_settings[cb_id] %>
+          >
+        </td>
+      </tr>
 
-player senses
-grue sense
-gem sense 
-goal sense
-clairvoyance
+      <tr>
+        <td>
+          <label>
+            <%= "#{select_id.to_s.capitalize} room >> " %>
+          </label>
+        </td>
+        <td class="<%= select_id.to_s%>">
+          <select 
+            name="<%= select_id.to_s + "_room" %>" 
+            class="room_select" 
+            <%= 'disabled="disabled"' if settings.mzw.game_settings[cb_id] %>
+          >
+            <% settings.mzw.map.rooms.each_key do |key| %>
+              <option 
+                value="<%= key.to_s.delete(' ') %>" 
+                class="<%= key.to_s.delete(' ') %>"
+                <%= 'selected="selected"' if settings.mzw.map.rooms[key].flags[select_id] %>
+              >
+                <%= key.to_s.capitalize %>
+              </option>
+            <% end %>
+          </select>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>
+        Random gems
+      </td>
+      <td>
+        <input 
+          type="checkbox" 
+          name="random_gems"
+          class="random_gems_cb" 
+          <%= 'checked="checked"' if settings.mzw.game_settings[:random_gems] %>
+        >
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Random gem odds:
+      </td>
+      <td>
+        1 in <input type="number" min=1 max=100 value="<%= settings.mzw.game_settings[:random_gem_chance]  %>">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Gems required
+      </td>
+      <td>
+        <input type="number" min=1 max=100 value="<%= settings.mzw.game_settings[:gems_required]  %>">
+      </td>
+    </tr>
+      <tr>
+      <td>
+        Turns between rest
+      </td>
+      <td>
+        <input type="number" min=1 max=100 value="<%= settings.mzw.game_settings[:turns_between_rest]  %>">
+      </td>
+    </tr>
+
+    <% settings.mzw.player.settings.each_key do |setting| %>
+      <tr>
+        <td>
+          <label>
+            <%= setting.to_s %>
+          </label>
+        </td>
+        <td>
+          <input 
+            type="checkbox" 
+            name="<%= setting.to_s %>"
+            class="random_gems_cb" 
+            <%= 'checked="checked"' if settings.mzw.player.settings[setting] %>
+          >
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</form>
+
