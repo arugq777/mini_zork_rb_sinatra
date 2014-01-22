@@ -41,13 +41,9 @@ class MiniZorkWeb < MiniZork
     (game_boolean + player_boolean + numbers + symbols).each do |k|
       new_hash[k] = nil
     end
-
-    puts "nh", new_hash
-
+    #puts "nh", new_hash
     unless session_settings.empty?
-
-      puts "ss", session_settings
-
+      #puts "ss", session_settings
       session_settings.each_key do |key|
         new_hash[key.to_sym] = session_settings[key]
       end
@@ -88,9 +84,8 @@ class MiniZorkWeb < MiniZork
           puts "nothing happened."
         end
       end
-
-      puts "nh2", new_hash
-      puts "as", @all_settings
+      # puts "nh2", new_hash
+      # puts "as", @all_settings
     end
   end
 end
@@ -112,7 +107,8 @@ class MiniZorkApp < Sinatra::Base
   end
 
   get '/' do
-    #reset_mzw
+    mzw = MiniZorkWeb.new({})
+    reset_mzw(mzw)
     erb :index
   end
 
