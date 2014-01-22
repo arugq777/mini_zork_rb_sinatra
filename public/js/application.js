@@ -1,6 +1,6 @@
 $(document).ready( function(){
   $("#commandForm").submit(submitMove);
-  //$("#settingsForm").submit(submitSettings);
+  $("#settingsForm").submit(submitSettings);
 
   $(".heading").click( function(){
     $(this).next(".menu").slideToggle();
@@ -65,24 +65,24 @@ function submitMove(ev){
   });
 }
 
-// function submitSettings(ev){
-//   ev.preventDefault();
-//   var form = $("#settingsForm");
-//   $.ajax({
-//     timeout:3000,
-//     type: form.attr('method'),
-//     url: form.attr('action'),
-//     data: form.serialize(),
-//     dataType: 'html',
-//     success: function(data){
-//       ev.preventDefault();
-//       $("#main").html( data );
-//     },
-//     complete: function(){
-//       updateInfo();
-//     }
-//   });
-// }
+function submitSettings(ev){
+  ev.preventDefault();
+  var form = $("#settingsForm");
+  $.ajax({
+    timeout:3000,
+    type: form.attr('method'),
+    url: form.attr('action'),
+    data: form.serialize(),
+    dataType: 'html',
+    success: function(data){
+      ev.preventDefault();
+      $("#main").html( data );
+    },
+    complete: function(){
+      updateInfo();
+    }
+  });
+}
 
 function updateInfo(){
   $.get("/info", function( response ) {
@@ -91,11 +91,11 @@ function updateInfo(){
   });
 }
 
-// function updateSettings(){
-//   return $.get("/settings", function( response ) {
-//     $("#settings").html( response );
-//   });
-// }
+function updateSettings(){
+  return $.get("/settings", function( response ) {
+    $("#settings").html( response );
+  });
+}
 
 function loadingAnimation(){
   var $loading = $("#loading");

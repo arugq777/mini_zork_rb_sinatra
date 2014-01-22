@@ -147,7 +147,7 @@ class MiniZorkApp < Sinatra::Base
       #puts "sss1", sess_settings
       new_mzw = MiniZorkWeb.new(session_settings)
       reset_mzw(new_mzw)
-      erb :index
+      erb :main
     end
   end
 end
