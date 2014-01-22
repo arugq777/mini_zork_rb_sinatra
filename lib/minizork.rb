@@ -35,6 +35,7 @@ class MiniZork
     Path.set_map(@map)
     RoomOccupant.set_map(@map)
 
+    @map.random_gems(@game_settings[:random_gem_chance]) if @game_settings[:random_gems]
     start_room = initialize_starting_positions
     @player = Player.new(start_room[:player], @all_settings[:player])
     @grue = Grue.new(start_room[:grue], start_room[:player], @all_settings[:grue])
@@ -51,7 +52,6 @@ class MiniZork
   def import_map_from_json
     json = File.read("./config/map_config.json")
     @map = GameMap.new(json)
-    @map.random_gems(@game_settings[:random_gem_chance]) if @game_settings[:random_gems]
     if @game_settings[:randomize_goal]
       @map.randomize_goal
     else

@@ -2,7 +2,7 @@
     "game":{
         "prompt": ">> ",
         "gems_required":6,
-        "random_gems":true,
+        "random_gems":false,
         "random_gem_chance":5,
         "randomize_goal":true,
         "randomize_player_start":false,

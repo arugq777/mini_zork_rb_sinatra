@@ -44,7 +44,7 @@ aside{
 }
 .heading{
 	color: #FF0;
-	width: 95%;
+	min-width: 95%;
 	padding: 10px;
 	margin: 10px 0 10px 0;
 	border: solid 2px;

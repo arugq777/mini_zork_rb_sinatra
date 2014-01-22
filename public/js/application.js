@@ -1,15 +1,19 @@
 $(document).ready(function(){
   $("#commandForm").submit(submitMove);
+  $("#settingsForm").submit(submitSettings);
 
   $(".heading").click(function(){
     $(this).next(".menu").slideToggle();
   });
 
   $(".room_setting_cb").change(function(){
-    $("." + $(this).parent().attr("class") + " .room_select")
-      .prop("disabled", function(){                             
-        return ! $(this).prop('disabled');
-    });
+    var $room_select = $("." + $(this).parent().attr("class") + " .room_select")
+    toggleDisabledProp($room_select);
+  });
+
+  var $rgc = $(".random_gem_chance");
+  $(".random_gems_cb").change(function(){
+    toggleDisabledProp($rgc);
   });
 
   var $prs = $(".player .room_select");
@@ -51,6 +55,27 @@ function submitMove(ev){
     },
     complete: function(){
       updateInfo();
+      updateSettings();
+    }
+  });
+}
+
+function submitSettings(ev){
+  ev.preventDefault();
+  var form = $("#settingsForm");
+  $.ajax({
+    timeout:3000,
+    type: form.attr('method'),
+    url: form.attr('action'),
+    data: form.serialize(),
+    dataType: 'html',
+    success: function(data){
+      ev.preventDefault();
+      $("#main").html( data );
+    },
+    complete: function(){
+      updateInfo();
+      updateSettings();
     }
   });
 }
@@ -58,6 +83,12 @@ function submitMove(ev){
 function updateInfo(){
   $.get("/info", function( response ) {
       $("#info").html( response );
+  });
+}
+
+function updateSettings(){
+  $.get("/settings", function( response ) {
+      $("#settings").html( response );
   });
 }
 
@@ -73,4 +104,10 @@ function loadingAnimation(){
 function disableInitialRoomOptions(grs, prs){
   grs.find("option." + prs.val()).prop("disabled", true);
   prs.find("option." + grs.val()).prop("disabled", true);
+}
+
+function toggleDisabledProp(obj){
+  obj.prop("disabled", function(){                             
+    return ! $(this).prop('disabled');
+  });
 }

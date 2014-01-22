@@ -1,4 +1,4 @@
-<form>
+<form id="settingsForm" action="/settings" method="post">
   <table>
     <% loop_hash = {randomize_player_start: :player, 
                     randomize_grue_start:   :grue,
@@ -23,7 +23,7 @@
       <tr>
         <td>
           <label>
-            <%= "#{select_id.to_s.capitalize} room >> " %>
+            <%= "#{select_id.to_s.capitalize} room " %>
           </label>
         </td>
         <td class="<%= select_id.to_s%>">
@@ -34,7 +34,7 @@
           >
             <% settings.mzw.map.rooms.each_key do |key| %>
               <option 
-                value="<%= key.to_s.delete(' ') %>" 
+                value="<%= key.to_s %>" 
                 class="<%= key.to_s.delete(' ') %>"
                 <%= 'selected="selected"' if settings.mzw.map.rooms[key].flags[select_id] %>
               >
@@ -63,7 +63,15 @@
         Random gem odds:
       </td>
       <td>
-        1 in <input type="number" min=1 max=100 value="<%= settings.mzw.game_settings[:random_gem_chance]  %>">
+        1 in <input
+                type="number" 
+                name="random_gem_chance"
+                class="random_gem_chance"
+                min=1 
+                max=100 
+                value="<%= settings.mzw.game_settings[:random_gem_chance]  %>"
+                <%= "disabled='disabled'" unless settings.mzw.game_settings[:random_gems] %>
+              >
       </td>
     </tr>
     <tr>
@@ -71,7 +79,13 @@
         Gems required
       </td>
       <td>
-        <input type="number" min=1 max=100 value="<%= settings.mzw.game_settings[:gems_required]  %>">
+        <input 
+          type="number"
+          name="gems_required" 
+          min=1 
+          max=100 
+          value="<%= settings.mzw.game_settings[:gems_required]  %>"
+          >
       </td>
     </tr>
       <tr>
@@ -79,7 +93,13 @@
         Turns between rest
       </td>
       <td>
-        <input type="number" min=1 max=100 value="<%= settings.mzw.game_settings[:turns_between_rest]  %>">
+        <input 
+          type="number" 
+          name="turns_between_rest"
+          min=1 
+          max=100 
+          value="<%= settings.mzw.game_settings[:turns_between_rest]  %>"
+        >
       </td>
     </tr>
 
@@ -94,12 +114,12 @@
           <input 
             type="checkbox" 
             name="<%= setting.to_s %>"
-            class="random_gems_cb" 
+            class="player_hint_cb" 
             <%= 'checked="checked"' if settings.mzw.player.settings[setting] %>
           >
         </td>
       </tr>
     <% end %>
   </table>
+  <button type="submit">Submit</button>
 </form>
-

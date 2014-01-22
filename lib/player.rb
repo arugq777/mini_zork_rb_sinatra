@@ -8,9 +8,9 @@ class Player < RoomOccupant
     @stats = {alive: true, turns: 1, moves: 0, rest_countdown: -1}
 
     @stats[:rest_countdown] += settings[:stats][:rest_countdown]
-    @settings = settings[:settings]
+    @settings  = settings[:settings]
     @inventory = settings[:inventory]
-    @messages = settings[:messages]
+    @messages  = settings[:messages]
 
     super(room, :player)
   end
