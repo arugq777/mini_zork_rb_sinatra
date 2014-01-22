@@ -8,12 +8,12 @@ class GameMap
     @valid_directions = [:north, :south, :east, :west ]
     @rooms = {}
     #json = File.read("./config/map_config.json")
-    game_map_data = JSON.parse(input, symbolize_names: true)
+    @game_map_data = JSON.parse(input, symbolize_names: true)
 
     #setup the map, which is a hash of Room objects
-    game_map_data[:rooms].each do |room|
+    @game_map_data[:rooms].each do |room|
       exit_array = []
-      game_map_data[:exits].each do |exit|
+      @game_map_data[:exits].each do |exit|
         if exit[:from_room] == room[:color]
           exit_array << Room::Exit.new(
             exit[:from_room].downcase.to_sym, 
@@ -73,6 +73,12 @@ class GameMap
         room.gems += 1
         room.flags[:loot] = true
       end
+    end
+  end
+
+  def reset_gems
+    @game_map_data[:rooms].each do |r|
+      @rooms[r[:color].to_sym].gems = r[:gems]
     end
   end
 end

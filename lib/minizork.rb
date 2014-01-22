@@ -62,10 +62,17 @@ class MiniZork
   def initialize_starting_positions
     #initialize starting positions for player & grue
     starting_positions = {}
+
+    [:player, :grue].each do |x|
+      if @all_settings[x][:room].is_a?(String)
+        @all_settings[x][:room] = @all_settings[x][:room].downcase.to_sym
+      end
+    end
+
     if @game_settings[:randomize_player_start]
       player_start_room = @map.rooms.keys.sample
     else
-      player_start_room = @all_settings[:player][:room].downcase.to_sym
+      player_start_room = @all_settings[:player][:room]
     end 
 
     if @game_settings[:randomize_grue_start]
@@ -74,7 +81,7 @@ class MiniZork
         grue_start_room = @map.rooms.keys.sample
       end
     else
-      grue_start_room = @all_settings[:grue][:room].downcase.to_sym
+      grue_start_room = @all_settings[:grue][:room]
     end
     starting_positions[:player] = player_start_room
     starting_positions[:grue] = grue_start_room
