@@ -90,10 +90,7 @@ function submitSettings(ev){
 }
 
 function error(){
-  var msg = "<span style='text-align:left;'>
-    Error! MINIZORK.EXE not found!
-    <br/><br/>Not ready reading drive A 
-    <br/>Abort, Retry, Fail?</span>";
+  var msg = "<span style='text-align:left;'>Error! MINIZORK.EXE not found!<br/><br/>Not ready reading drive A<br/>Abort, Retry, Fail?</span>";
   $( "#loading" ).html( msg ).show();
 }
 function updateInfo(){
