@@ -17,15 +17,21 @@ class Player < RoomOccupant
 
 
   def move(direction)
-    move_msg = ""
+    move_msg = "You move to the "
     possible_directions = {}
     @@map.rooms[@room.color].exits.each do |exit|
       possible_directions[exit.from_direction] = exit.to_room
     end
     if possible_directions.has_key?(direction)
       set_room(possible_directions[direction], :player)
-      move_msg = "You move to the #{direction.to_s.upcase}"
+      move_msg += "#{direction.to_s.upcase}"
     else
+      # return false to prevent end_turn.
+      # I suppose there could be more methods like
+      # player.moved_this_turn? or player.rested_this_turn?
+      # then I could replace this 'return false' with 
+      # 'move_msg = "There is no exit to the #{direction.to_s.upcase}"'
+      # Maybe later.
       return false
     end
     @stats[:moves] += 1

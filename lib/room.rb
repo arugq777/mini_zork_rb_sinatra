@@ -21,7 +21,7 @@ class Room
     @flags[:loot] = @gems > 0
   end
 
-def switch_flag(flag, options = {})
+  def switch_flag(flag, options = {})
     @flags[flag] = options[:value] || !@flags[flag]
   end
 

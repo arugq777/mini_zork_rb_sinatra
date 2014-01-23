@@ -83,8 +83,10 @@ class MiniZork
     else
       grue_start_room = @all_settings[:grue][:room]
     end
+
     starting_positions[:player] = player_start_room
     starting_positions[:grue] = grue_start_room
+    
     return starting_positions
   end
 
