@@ -90,7 +90,7 @@ function submitSettings(ev){
 }
 
 function error(){
-  $( "#error").each( function(){ 
+  $( ".error").each( function(){ 
     $(this).slideDown("slow");
   });
 }
