@@ -43,7 +43,6 @@ $( document ).ajaxStart(function() {
 
 $( document ).ajaxStop(function() {
   $( "#loading" ).stop().hide();
-  // $().trigger("ready");
 });
 
 function submitMove(ev){
@@ -58,6 +57,9 @@ function submitMove(ev){
     success: function(data){
       ev.preventDefault();
       $(data).fadeIn("slow").prependTo('#turns');
+    },
+    error: function() {
+      error();
     },
     complete: function(){
       updateInfo();
@@ -78,12 +80,22 @@ function submitSettings(ev){
       ev.preventDefault();
       $("#main").html( data );
     },
+    error: function() {
+      error();
+    },
     complete: function(){
       updateInfo();
     }
   });
 }
 
+function error(){
+  var msg = "<span style='text-align:left;'>
+    Error! MINIZORK.EXE not found!
+    <br/><br/>Not ready reading drive A 
+    <br/>Abort, Retry, Fail?</span>";
+  $( "#loading" ).html( msg ).show();
+}
 function updateInfo(){
   $.get("/info", function( response ) {
       //console.log(response)

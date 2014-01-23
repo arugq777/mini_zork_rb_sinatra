@@ -84,9 +84,14 @@ footer ul li:hover, .heading:hover {
 }
 
 button{
-	background-color: #0f0;
+	background-color: #080;
+	border:none;
 	font-family: "Green Screen", monospace;
 	padding: 5px;
+}
+
+button:hover{
+	background-color: #0f0;
 }
 
 .look, .rest, .grue_flees, 
