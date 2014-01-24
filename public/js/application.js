@@ -82,7 +82,7 @@ function submitMove(ev){
 //when settings are submitted, #main is refreshed,
 //wiping out the previous game. #info is refreshed,
 //while #settings stay the same, which makes sense as
-//they where just submitted.
+//they were just submitted.
 function submitSettings(ev){
   ev.preventDefault();
   var form = $("#settingsForm");
@@ -107,9 +107,7 @@ function submitSettings(ev){
 
 //a very general, unhelpful error message.
 function error(){
-  $( ".error").each( function(){ 
-    $(this).slideDown("slow");
-  });
+  $( ".error").show();
 }
 
 function updateInfo(){

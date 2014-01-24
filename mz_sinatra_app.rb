@@ -1,7 +1,7 @@
 require "rubygems"
 gem "rubytree", "0.8.3"
 
-require "./lib/minizorkweb"
+require "./lib/mzweb"
 require "sinatra"
 require "sinatra/partial"
 

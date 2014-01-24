@@ -18,12 +18,6 @@ class MiniZork
   @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, 
             :turns, :l, :look]
 
-  @@output_order = [:move, :grue_flees, :loot, :rest, :start, :look, 
-                    :sense, :exits, :grue_move, :lose, :win]
-  @@info_order = [:turns, :moves, :inventory, :rest_countdown]
-  @@clairvoyance= [:grue, :grue_path, :goal, :goal_path, :loot]
-
-
   def initialize
     @game_over = false
     @quit = false
@@ -93,6 +87,7 @@ class MiniZork
   def starting_output
     @output_hash = {}
     @output_hash[:start] = @messages[:start].sample
+    @output_hash[:turn] = "Turn 1"
     @output_hash[:look]  = @player.look
     @output_hash[:sense] = @player.sense(@game_settings[:gems_required], @grue)
     @output_hash[:exits] = @player.list_exits 
@@ -125,26 +120,6 @@ class MiniZork
       @quit = true
     else
       puts "invalid command: #{command}"
-    end
-  end
-
-
-  def get_info(command)
-    case command
-    when :gems, :i, :inventory
-      puts "\nYou have #{@player.inventory[:gems].to_s} gems"
-    when :moves, :turns
-      puts "\nYou've made #{@player.stats[:moves].to_s} moves in #{@player.stats[:turns].to_s} turns"
-    when :stats, :statistics
-      puts "\nTurn #{@player.stats[:turns].to_s}"
-      puts "\nTurns til rest: #{@player.stats[:rest_countdown]}"
-      puts "#{@player.inventory[:gems].to_s} gems"
-      puts "#{@player.stats[:moves].to_s} moves\n"
-    when :l, :look
-      #@player.get_loot
-      puts @player.look
-      @player.see(@grue) if @player.has_clairvoyance?
-      puts @player.list_exits
     end
   end
 
@@ -200,6 +175,7 @@ class MiniZork
   def end_turn
     @player.stats[:turns] += 1
     @player.stats[:rest_countdown] -= 1
+    @output_hash[:turn] = "Turn #{@player.stats[:turns]}"
     @output_hash[:look] = @player.look
     @output_hash[:exits] = @player.list_exits
     unless @grue.fled_this_turn
@@ -222,28 +198,6 @@ class MiniZork
     @player.inventory[:gems] >= @game_settings[:gems_required]
   end
 
-  def print_output(print_order, hash_to_print)
-    print_order.each do |key|
-      unless hash_to_print[key].nil?
-        if hash_to_print[key].is_a?(Array) && !hash_to_print[key].empty?
-          print "[#{key.to_s}]: "
-          hash_to_print[key].each do |array_string|
-            print "#{array_string} "
-          end
-          puts ""
-        else
-          puts "[#{key.to_s}]: #{hash_to_print[key]}"
-        end
-      end
-    end    
-  end
-
-  def output_for_this_turn
-    print_output(@@info_order, @info_hash[:player])
-    print_output(@@clairvoyance, @info_hash[:clairvoyance])
-    print_output(@@output_order, @output_hash)
-  end
-
   def play(command)
     @grue.fled_this_turn = false
     unless @game_over
@@ -252,6 +206,7 @@ class MiniZork
       #@output_hash[:sense] = @player.sense(@settings[:gems_required])
       if time_to_rest?
         rest #duh.
+        end_turn
       else 
         execute_command(command)
         if @output_hash[:move] == false

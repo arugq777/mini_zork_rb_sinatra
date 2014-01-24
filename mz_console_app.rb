@@ -1,8 +1,8 @@
 require "rubygems"
 gem "rubytree", "0.8.3"
-require "./lib/minizork"
+require "./lib/mzconsole"
 
-mz = MiniZork.new
+mz = MiniZorkConsole.new
 
 until mz.game_over
   mz.output_for_this_turn

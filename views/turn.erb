@@ -14,7 +14,7 @@
     </div>
   <% end %>
 
-  <% if @mzw.output_hash[:grue_move] %>
+  <% if @mzw.output_hash[:grue_move] && @mzw.player.has_clairvoyance? %>
     <div class="grue_move">
       <p><%= @mzw.output_hash[:grue_move] %></p>
     </div>
