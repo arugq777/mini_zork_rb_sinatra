@@ -180,7 +180,8 @@ class MiniZork
   def rest
     @output_hash[:rest] =  @player.rest(@game_settings[:turns_between_rest])
     @output_hash[:rest] += " [You REST for one turn.]"
-    end_turn
+    @output_hash[:move] = ""
+    #end_turn
   end
 
   def you_lose
