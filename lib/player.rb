@@ -5,7 +5,12 @@ class Player < RoomOccupant
 
   def initialize(room, settings)
     
-    @stats = {alive: true, turns: 1, moves: 0, rest_countdown: -1}
+    @stats = {turns: 1, 
+              moves: 0, 
+              rest_countdown: -1}
+              # alive: true, 
+              # moved_this_turn: false,
+              # rested_this_turn: false,
 
     @stats[:rest_countdown] += settings[:stats][:rest_countdown]
     @settings  = settings[:settings]
@@ -34,6 +39,7 @@ class Player < RoomOccupant
       # Maybe later.
       return false
     end
+    #@stats[:moved_this_turn] = true
     @stats[:moves] += 1
     move_msg
   end
@@ -92,32 +98,6 @@ class Player < RoomOccupant
     sense_msg unless sense_msg.empty?
   end
 
-  #this is used in the console version's look command;
-  #could probably delete this.
-  def see(grue)
-    puts "GRUE is in " + grue.is_in_room.to_s.capitalize
-    puts "It's current route is: #{grue.path.route}"
-    print "GRUE has fled: ", grue.fled_this_turn, "\n"
-    print "GOAL is in " 
-    @@map.rooms.each_value do |room| 
-      if room.is_goal?
-        puts room.color.to_s.capitalize 
-        @path_to_goal = Path.new(@room.color, room.color)
-        puts "Path to GOAL is #{@path_to_goal.route}"
-      end
-    end
-    print "\nGEMS can be found in:"
-    @@map.rooms.each_value do |room| 
-      if room.flags[:loot]
-        print " " + room.color.to_s.capitalize + " [#{room.gems}]"
-      end
-    end
-    puts "\n"
-    @@map.rooms.each_value do |room|
-      print room.color, room.flags, "\n"
-    end
-  end
-
   def rest(reset)
     @stats[:rest_countdown] = reset
     @messages[:rest].sample
@@ -138,4 +118,12 @@ class Player < RoomOccupant
   def has_clairvoyance?
     @settings[:clairvoyance]
   end
+
+  # def moved_this_turn?
+  #   @stats[:moved_this_turn]
+  # end
+
+  # def rested_this_turn?
+  #   @stats[:rested_this_turn]
+  # end
 end

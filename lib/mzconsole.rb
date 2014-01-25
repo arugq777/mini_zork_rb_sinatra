@@ -1,7 +1,8 @@
 require "./lib/minizork"
 
 class MiniZorkConsole < MiniZork
-
+  @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, 
+            :turns, :l, :look]
   @@output_order = [:move, :grue_flees, :loot, :rest, :turn, :start, 
                     :look, :sense, :exits, :grue_move, :lose, :win]
   @@info_order = [:turns, :moves, :inventory, :rest_countdown]
@@ -22,7 +23,8 @@ class MiniZorkConsole < MiniZork
       "You have moved #{@info_hash[:player][:moves].to_s} times\n\n"]
     @info_hash[:messages][:look] = @player.look
     @info_hash[:messages][:exits] = "\nExits: "
-    @player.list_exits.each do |x| 
+    exits = @player.list_exits
+    exits.each do |x| 
       @info_hash[:messages][:exits] += "#{x.to_s.upcase} "
     end
   end
@@ -37,11 +39,9 @@ class MiniZorkConsole < MiniZork
     when :stats, :statistics
       @info_hash[:messages][:stats].each {|s| puts s}
     when :l, :look
-      #@player.get_loot
-      # puts @player.look
-      # @player.see(@grue) if @player.has_clairvoyance?
-      # puts @player.list_exits
-      puts @info_hash[:messages][:look], @info_hash[:messages][:exits]
+      puts @output_hash[:turn], 
+           @info_hash[:messages][:look], 
+           @info_hash[:messages][:exits]
     end
   end
 

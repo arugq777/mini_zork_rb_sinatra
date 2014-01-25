@@ -14,18 +14,14 @@ class MiniZorkWeb < MiniZork
 
     process_session_settings(session_settings)
     
-    if @game_settings[:random_gems]
-      @map.random_gems(@game_settings[:random_gem_chance]) 
-    else
-      @map.reset_gems
-    end
+    additional_map_settings
 
     start_room = initialize_starting_positions
     @player = Player.new(start_room[:player], @all_settings[:player])
     @grue = Grue.new(start_room[:grue], start_room[:player], @all_settings[:grue])
     starting_output
   end
-
+  
   def process_session_settings(session_settings)
     game_boolean = [:random_gems, :randomize_player_start, :randomize_grue_start, :randomize_goal] 
     player_boolean = [:gem_sense, :goal_sense, :grue_sense, :clairvoyance]
