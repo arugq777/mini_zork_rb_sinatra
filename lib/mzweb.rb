@@ -29,9 +29,9 @@ class MiniZorkWeb < MiniZork
     symbols = [:player_room, :grue_room, :goal_room]
     new_hash = {}
 
-    (game_boolean + player_boolean + numbers + symbols).each do |k|
-      new_hash[k] = nil
-    end
+    # (game_boolean + player_boolean + numbers + symbols).each do |k|
+    #   new_hash[k] = nil
+    # end
     #puts "nh", new_hash
     unless session_settings.empty?
       #puts "ss", session_settings

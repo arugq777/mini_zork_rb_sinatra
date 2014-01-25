@@ -75,15 +75,16 @@ class Player < RoomOccupant
   def sense (gems_required, grue)
     sense_msg = {}
     #check for stuff from player's position
-    @room.exits.each do |exit|
-      case 
-      when has_gem_sense? && @@map.rooms[exit.to_room].has_loot?
+    @room.exits.each do |exit| 
+      if has_gem_sense? && @@map.rooms[exit.to_room].has_loot?
         sense_msg[:gem] = @messages[:gem].sample + " [A GEM is near.]"
-      when has_goal_sense? && @@map.rooms[exit.to_room].is_goal?
+      end
+      if has_goal_sense? && @@map.rooms[exit.to_room].is_goal?
         if gems_required <= @inventory[:gems]
           sense_msg[:goal] = @messages[:goal].sample + " [The GOAL is near.]"
         end
-      when has_grue_sense? && @@map.rooms[exit.to_room].has_grue?
+      end
+      if has_grue_sense? && @@map.rooms[exit.to_room].has_grue?
         sense_msg[:grue] = @messages[:grue].sample + " [The GRUE is near.]"
       end
     end
