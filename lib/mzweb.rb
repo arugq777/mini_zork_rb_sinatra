@@ -62,6 +62,9 @@ class MiniZorkWeb < MiniZork
           @all_settings[:game][key] = new_hash[key]
         elsif numbers.include?( key )
           @all_settings[:game][key] = new_hash[key]
+          if key == :turns_between_rest
+            @all_settings[:player][:stats][:rest_countdown] = new_hash[key]
+          end
         elsif symbols.include?( key )
           k = []
           key.to_s.split('_').each {|s| k << s.to_sym}

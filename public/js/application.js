@@ -52,7 +52,7 @@ $( document ).ajaxStart(function() {
 });
 //and then stopped.
 $( document ).ajaxStop(function() {
-  $( "#loading" ).stop().hide();
+  $( "#loading" ).hide();
 });
 
 //when a move is submitted, a turn partial is received
@@ -75,6 +75,7 @@ function submitMove(ev){
     },
     complete: function(){
       updateInfo();
+      $( "#loading" ).stop();
     }
   });
 }
@@ -101,6 +102,7 @@ function submitSettings(ev){
     },
     complete: function(){
       updateInfo();
+      $( "#loading" ).stop();
     }
   });
 }

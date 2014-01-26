@@ -1,4 +1,4 @@
-%doctype{:5 => ""}
+%doctype
   %html
     %head
       %link{:href => "./stylesheet.css", :rel => "stylesheet", :type => "text/css"}
@@ -9,8 +9,14 @@
         #inside-wrapper
           %header
           %aside
-            #info
-              = haml(:info)
+            #info_slider
+              .heading I N F O
+              .menu#info
+                = haml(:info)
+            #settings_slider
+              .heading S E T T I N G S
+              .menu#settings
+                = haml(:settings)
           #main
             = haml(:main)
           %div{:style => "clear:both;"}

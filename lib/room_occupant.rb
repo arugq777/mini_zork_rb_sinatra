@@ -20,5 +20,4 @@ class RoomOccupant
     @@map.rooms[new_room_color].switch_flag(flag_id)
     @room = @@map.rooms[new_room_color]
   end
-  
 end

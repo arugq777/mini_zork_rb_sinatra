@@ -15,6 +15,9 @@ class MiniZork
                :moves, :turns, :l, :look, 
                :q, :quit] #:restart
 
+  @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, 
+            :turns, :l, :look]
+
   def initialize
     @game_over = false
     @quit = false

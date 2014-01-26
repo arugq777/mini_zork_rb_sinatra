@@ -1,8 +1,7 @@
 require "./lib/minizork"
 
 class MiniZorkConsole < MiniZork
-  @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, 
-            :turns, :l, :look]
+
   @@output_order = [:move, :grue_flees, :loot, :rest, :turn, :start, 
                     :look, :sense, :exits, :grue_move, :lose, :win]
   @@info_order = [:turns, :moves, :inventory, :rest_countdown]
