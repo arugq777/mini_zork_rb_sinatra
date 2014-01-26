@@ -1,1 +1,30 @@
-index.slim
+doctype html
+html
+  head
+    title mz_sinatra/slim
+    link rel="stylesheet" type="text/css" href="./stylesheet.css"
+    script type="text/javascript" src="./js/jquery-2.0.3.min.js"
+    script type="text/javascript" src="./js/application.js"
+  body
+    #wrapper
+      #inside-wrapper
+        header
+        aside
+          #info_slider
+            .heading I N F O
+            #info.menu
+              == slim :"/slim/info"
+          #settings_slider
+            .heading S E T T I N G S
+            #settings.menu
+              ==slim :"/slim/settings"
+        #main
+          == slim :"/slim/main"
+
+        div style="clear:both;"
+
+        footer
+          #exits
+            == slim :"/slim/exits"
+
+      div style="clear:both;"

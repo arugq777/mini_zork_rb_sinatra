@@ -7,7 +7,8 @@
         %li
           %label
             %input.command{:name => "clicked_command", :type => "radio", :value => direction.to_s}
-              = "#{direction.to_s.upcase}"
+            = "#{direction.to_s.upcase}"
       %li
         %label
-          %input{:checked => "", :name => "clicked_command", :type => "radio", :value => "rest"} REST
+          %input.command{:checked => "", :name => "clicked_command", :type => "radio", :value => "rest"} 
+          REST

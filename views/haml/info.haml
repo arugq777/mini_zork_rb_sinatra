@@ -2,14 +2,14 @@
 - cv = settings.mzw.info_hash[:clairvoyance]
 
 .stats
-  %div
+  .turn
     Turn: #{stats[:turns]}
-  %div
+  .moves
     Moves: #{stats[:moves]}
-  %div
+  .gems
     Gems: #{stats[:inventory][:gems]} of 
     #{settings.mzw.game_settings[:gems_required]}
-  %div
+  .rest_cd
     Rest in #{stats[:rest_countdown]} turns
 
 - unless cv.nil?
