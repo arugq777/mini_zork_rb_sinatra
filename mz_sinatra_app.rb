@@ -25,24 +25,24 @@ class MiniZorkApp < Sinatra::Base
   get '/' do
     mzw = MiniZorkWeb.new({})
     reset_mzw(mzw)
-    #erb :index
-    haml :index
+    # erb :"/erb/index"
+    haml :"/haml/index"
   end
 
   get '/exits' do
-    #erb :exits
-    haml :exits
+    # erb :"/erb/exits"
+    haml :"/haml/exits"
   end
 
   get '/info' do
-    # erb :info
-    haml :info
+    # erb :"/erb/info"
+    haml :"/haml/info"
 
   end
 
   get '/settings' do
-    # erb :settings
-    haml :settings
+    # erb :"/erb/settings"
+    haml :"/haml/settings"
   end
 
   post '/' do
@@ -52,11 +52,11 @@ class MiniZorkApp < Sinatra::Base
         settings.mzw.play(command)
         if settings.mzw.output_hash[:move] == false
           @msg = "There is no exit to the #{command.to_s.upcase}!"
-          # erb :invalid_move, locals: {msg: @msg}
-          haml :invalid_move, locals: {msg: @msg}
+          # erb :"/erb/invalid_move", locals: {msg: @msg}
+          haml :"/haml/invalid_move", locals: {msg: @msg}
         else
-          # erb :turn
-          haml :turn
+          # erb :"/erb/turn"
+          haml :"/haml/turn"
         end
       end
     else
@@ -66,8 +66,8 @@ class MiniZorkApp < Sinatra::Base
       #puts "sss2", sess_settings
       new_mzw = MiniZorkWeb.new(session_settings)
       reset_mzw(new_mzw)
-      # erb :main
-      haml :main
+      # erb :"/erb/main"
+      haml :"/haml/main"
     end
   end
 end

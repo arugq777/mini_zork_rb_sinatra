@@ -1,0 +1,30 @@
+- m = settings.mzw
+- oh = settings.mzw.output_hash
+- order = [:win, :lose, :grue_move, :rest, :grue_flees, :move]
+%li{ :id => "turn_#{m.player.stats[:turns].to_s}"}
+  - order.each do |item|
+    - if item == :rest
+      - if oh[item]
+        %div{:class=>"#{item.to_s}"}
+          %p= oh[item]
+      - else
+        - unless m.game_over
+          %div{ :class => "look #{m.player.room.color.to_s.delete(' ')}"}
+            .start
+              %p= oh[:start] unless nil
+            .room_description
+              %p= oh[:look]
+            .sense
+              %ul
+                - unless oh[:sense].nil?
+                  - oh[:sense].each_value do |sense|
+                    %li= sense
+            .exits
+              %p
+                EXITS:
+                - oh[:exits].each do |exit|
+                  = exit.upcase
+    - else
+      - if oh[item]
+        %div{:class=>"#{item.to_s}"}
+          %p= oh[item]
