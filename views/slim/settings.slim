@@ -22,7 +22,8 @@ form action="/" id="settingsForm" method="post"
             name="#{select_id.to_s}_room"
             disabled=("disabled" if game_settings[cb_id])]
             - rooms.each_key do |key|
-              option[ class=key.to_s.delete(' ')
+              option[ value=key.to_s.delete(' ')
+                class=key.to_s.delete(' ')
                 selected=("selected" if rooms[key].flags[select_id])]
                 = key.to_s.capitalize
     tr
@@ -40,6 +41,12 @@ form action="/" id="settingsForm" method="post"
           name="random_gem_chance"
           value=game_settings[:random_gem_chance]
           disabled=("disabled" unless game_settings[:random_gems])]
+    tr
+      td Gems Required
+      td
+        input.gems_required[type="number" max="100" min="1"
+          name="gems_required"
+          value=game_settings[:gems_required]]
     tr
       td Turns Between Rest
       td
