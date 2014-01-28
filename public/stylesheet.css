@@ -8,6 +8,17 @@
 	padding: 0;
 }
 
+body {
+	background-color: black;
+	color: #fff;
+	font-family: "Green Screen", monospace;
+}
+
+.error, #loading{
+	display:none;
+	color: #fff;
+}
+
 #wrapper {
 	background: black;
 	min-width: 780px;
@@ -20,11 +31,6 @@
 		padding-bottom: 10px;
 	}
 
-body {
-	background-color: black;
-	color: #fff;
-	font-family: "Green Screen", monospace;
-}
 
 #main {
 	background: black;
@@ -42,6 +48,7 @@ aside{
 	padding-left: 15px;
 	padding-top: 20px;
 }
+table{	padding-bottom: 30px;}
 .heading{
 	color: #FF0;
 	min-width: 95%;
@@ -52,18 +59,17 @@ aside{
 }
 
 footer{
-  position: fixed; 
-  width: 100%;
+  position: fixed;
+  width:100%;
   bottom: 0px; 
   color: #0f0;
   background-color: black;
   text-align: center
 }
 
-#exits {
-	padding-left: 27%;
+ol, ul {
+	list-style-position:inside;
 }
-
 
 ul{
 	list-style: none;
@@ -138,21 +144,10 @@ button:hover{
 	text-align: center;
 }
 
-#loading{
-	display:none;
-	color: #fff;
-}
-
-.error{
-	display:none;
-}
 #turns li div{
 	margin: 10px;
 }
 
-ol, ul {
-	list-style-position:inside;
-}
 #info li{
 	padding-left: 10px;
 }

@@ -1,3 +1,4 @@
+/! settings.slim
 - rooms = settings.mzw.map.rooms
 - game_settings = settings.mzw.game_settings
 form action="/" id="settingsForm" method="post"
@@ -62,4 +63,17 @@ form action="/" id="settingsForm" method="post"
             type="checkbox"
             name=setting.to_s
             checked=("checked" if settings.mzw.player.settings[setting])]
-  button type="submit" Submit
+  button type="submit" Restart With These Settings
+
+form action="/" id="templateForm" method="post"
+  table
+    - [:haml, :slim, :erb ].each do |template_type|
+      tr
+        td= template_type.to_s
+        td
+          input.command[ 
+            name="template_type" 
+            type="radio" 
+            value="#{template_type}"
+            checked=("checked" if template_type == settings.template_type)]
+  button type="submit" Switch Templates

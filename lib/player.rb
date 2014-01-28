@@ -120,11 +120,11 @@ class Player < RoomOccupant
     @settings[:clairvoyance]
   end
 
-  # def moved_this_turn?
+  # def moved?
   #   @stats[:moved_this_turn]
   # end
 
-  # def rested_this_turn?
+  # def rested?
   #   @stats[:rested_this_turn]
   # end
 end

@@ -1,3 +1,4 @@
+/ settings.haml
 - rooms = settings.mzw.map.rooms
 - game_settings = settings.mzw.game_settings
 %form{:action=>"/", :id=>"settingsForm", :method=>"post"}
@@ -15,8 +16,7 @@
           %input{:type => "checkbox",
             :name=> "#{ cb_id.to_s }",
             :class=> "room_setting_cb", 
-            :checked => ("checked" if game_settings[cb_id]) }           
-          
+            :checked => ("checked" if game_settings[cb_id]) }             
       %tr
         %td
           %label
@@ -30,7 +30,6 @@
                 :class => key.to_s.delete(' '),
                 :selected => ("selected" if rooms[key].flags[select_id]) }
                 = key.to_s.capitalize
-
     %tr
       %td
         Random gems
@@ -75,4 +74,17 @@
             :name => setting.to_s,
             :class => "player_hint_cb",
             :checked => ("checked" if settings.mzw.player.settings[setting]) }
-  %button{:type => "submit"} Submit
+  %button{:type => "submit"} Restart With These Settings
+
+%form{:action=>"/", :id=>"templateForm", :method=>"post"}
+  %table
+    - [:haml, :slim, :erb].each do |template_type|
+      %tr
+        %td
+          = template_type.to_s
+        %td
+          %input{ :type => "radio",
+            :name => "template_type",
+            :value => template_type.to_s,
+            :checked =>("checked" if template_type == settings.template_type)}
+  %button{ :type=>"submit" } Switch Templates

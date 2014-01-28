@@ -1,3 +1,4 @@
+<!-- settings.erb -->
 <form id="settingsForm" action="/" method="post">
   <!-- this form is a two column table; labels on left, inputs on right. -->  
   <table>
@@ -123,5 +124,24 @@
       </tr>
     <% end %>
   </table>
-  <button type="submit">Submit</button>
+  <button type="submit">Restart With These Settings</button>
+</form>
+
+<form id="templateForm" action="/" method="post">
+  <table>
+    <% [:erb, :haml, :slim ].each do |template_type| %>
+      <tr>
+        <td><%= template_type.to_s %></td>
+        <td>
+          <input
+            name="template_type"
+            type="radio"
+            value=<%= "#{template_type}" %>
+            checked=<%="checked" if template_type == settings.template_type %>
+          >
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <button type="submit">switch templates</button>
 </form>

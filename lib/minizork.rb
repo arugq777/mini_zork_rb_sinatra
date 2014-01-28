@@ -102,6 +102,8 @@ class MiniZork
     @info_hash = update_info_hash
   end
 
+  #move everything below to gameplay.rb...
+  #y'know, when you feel like breaking stuff
   def execute_command(command)
     if @map.valid_directions.include?(command)
       @output_hash[:move] = @player.move(command)

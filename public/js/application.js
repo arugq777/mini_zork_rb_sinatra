@@ -75,7 +75,7 @@ function submitMove(ev){
     },
     complete: function(){
       updateInfo();
-      $( "#loading" ).stop();
+      $( "#loading" ).finish();
     }
   });
 }
@@ -102,7 +102,7 @@ function submitSettings(ev){
     },
     complete: function(){
       updateInfo();
-      $( "#loading" ).stop();
+      $( "#loading" ).finish();
     }
   });
 }
