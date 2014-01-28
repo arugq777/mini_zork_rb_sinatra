@@ -6,13 +6,13 @@ module Gameplay
       if @player.room.is_goal? && victory_conditions_met?
         you_win
       end
-    # elsif @@info.include?(command)
-    #   get_info(command)
     elsif command == :rest
       rest
     elsif command == :quit
       @game_over = true
       @quit = true
+    # elsif @@info.include?(command)
+    #   get_info(command)
     else
       puts "invalid command: #{command}"
     end
@@ -114,7 +114,8 @@ module Gameplay
     @output_hash[:look] = @player.look
     @output_hash[:exits] = @player.list_exits
     unless @grue.fled_this_turn
-      @output_hash[:grue_move] = @grue.move(@player.room.color)
+      msg = @grue.move(@player.room.color)
+      @output_hash[:grue_move] = msg if @player.has_clairvoyance?
       you_lose if @grue.room.has_player?
     end
     @output_hash[:sense] = @player.sense(@game_settings[:gems_required], @grue)
