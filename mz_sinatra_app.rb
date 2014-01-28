@@ -16,8 +16,8 @@ class MiniZorkApp < Sinatra::Base
     def reset_mzw(mzw)
       settings.mzw = mzw
     end
-    def mzw_get(type, template)
-      method( type ).call("/#{type}/#{template}".to_sym)
+    def mzw_get(template)
+      method( settings.template_type ).call("/#{settings.template_type}/#{template}".to_sym)
     end
     def session_settings=(hash)
       @settings = hash
@@ -26,26 +26,30 @@ class MiniZorkApp < Sinatra::Base
       @settings
     end
     def set_template_type(type)
-      settings.template_type = type
+      if [:erb, :haml, :slim ].include?(type)
+        settings.template_type = type
+      else
+        puts "Invalid template type. How did that even happen?"
+      end
     end
   end
 
   get '/' do
     mzw = MiniZorkWeb.new({})
     reset_mzw(mzw)
-    mzw_get( settings.template_type, :index )
+    mzw_get( :index )
   end
 
   get '/exits' do
-    mzw_get( settings.template_type, :exits )
+    mzw_get( :exits )
   end
 
   get '/info' do
-    mzw_get( settings.template_type, :info )
+    mzw_get( :info )
   end
 
   get '/settings' do
-    mzw_get( settings.template_type, :settings )
+    mzw_get( :settings )
   end
 
   post '/' do
@@ -54,21 +58,21 @@ class MiniZorkApp < Sinatra::Base
       unless settings.mzw.game_over
         settings.mzw.play(command)
         if settings.mzw.player.moved? || settings.mzw.player.rested?
-          mzw_get( settings.template_type, :turn )
+          mzw_get( :turn )
         else
-          mzw_get( settings.template_type, :invalid_move)
+          mzw_get( :invalid_move )
         end
       end
     elsif params['template_type']
       type = params['template_type'].to_sym
       set_template_type(type)
-      mzw_get( settings.template_type, :index )
+      mzw_get( :index )
     else
       session_settings = {}
       session_settings = params
       new_mzw = MiniZorkWeb.new(session_settings)
       reset_mzw(new_mzw)
-      mzw_get( settings.template_type, :main )
+      mzw_get( :main )
     end
   end
 end
