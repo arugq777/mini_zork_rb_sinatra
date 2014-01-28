@@ -7,10 +7,10 @@ class Player < RoomOccupant
     
     @stats = {turns: 1, 
               moves: 0, 
-              rest_countdown: -1}
+              rest_countdown: -1,
+              moved_this_turn: false,
+              rested_this_turn: false}
               # alive: true, 
-              # moved_this_turn: false,
-              # rested_this_turn: false,
 
     @stats[:rest_countdown] += settings[:stats][:rest_countdown]
     @settings  = settings[:settings]
@@ -30,17 +30,11 @@ class Player < RoomOccupant
     if possible_directions.has_key?(direction)
       set_room(possible_directions[direction], :player)
       move_msg += "#{direction.to_s.upcase}"
+      @stats[:moved_this_turn] = true
+      @stats[:moves] += 1
     else
-      # return false to prevent end_turn.
-      # I suppose there could be more methods like
-      # player.moved_this_turn? or player.rested_this_turn?
-      # then I could replace this 'return false' with 
-      # 'move_msg = "There is no exit to the #{direction.to_s.upcase}"'
-      # Maybe later.
-      return false
+      move_msg = "There is no exit to the #{direction.to_s.upcase}"
     end
-    #@stats[:moved_this_turn] = true
-    @stats[:moves] += 1
     move_msg
   end
 
@@ -101,6 +95,7 @@ class Player < RoomOccupant
 
   def rest(reset)
     @stats[:rest_countdown] = reset
+    @stats[:rested_this_turn] = true
     @messages[:rest].sample
   end
 
@@ -120,11 +115,11 @@ class Player < RoomOccupant
     @settings[:clairvoyance]
   end
 
-  # def moved?
-  #   @stats[:moved_this_turn]
-  # end
+  def moved?
+    @stats[:moved_this_turn]
+  end
 
-  # def rested?
-  #   @stats[:rested_this_turn]
-  # end
+  def rested?
+    @stats[:rested_this_turn]
+  end
 end

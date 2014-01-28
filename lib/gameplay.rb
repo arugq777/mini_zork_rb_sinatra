@@ -6,8 +6,8 @@ module Gameplay
       if @player.room.is_goal? && victory_conditions_met?
         you_win
       end
-    elsif @@info.include?(command)
-      get_info(command)
+    # elsif @@info.include?(command)
+    #   get_info(command)
     elsif command == :rest
       rest
     elsif command == :quit

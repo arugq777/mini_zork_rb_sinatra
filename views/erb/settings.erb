@@ -129,7 +129,7 @@
 
 <form id="templateForm" action="/" method="post">
   <table>
-    <% [:erb, :haml, :slim ].each do |template_type| %>
+    <% [:haml, :slim, :erb ].each do |template_type| %>
       <tr>
         <td><%= template_type.to_s %></td>
         <td>

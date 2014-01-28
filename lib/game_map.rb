@@ -7,7 +7,6 @@ class GameMap
   def initialize(input)
     @valid_directions = [:north, :south, :east, :west ]
     @rooms = {}
-    #json = File.read("./config/map_config.json")
     @game_map_data = JSON.parse(input, symbolize_names: true)
 
     #setup the map, which is a hash of Room objects

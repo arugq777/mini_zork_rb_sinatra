@@ -1,7 +1,7 @@
 /! turn.slim
 - m = settings.mzw
 - oh = settings.mzw.output_hash
-- order = [:win, :lose, :grue_move, :rest, :grue_flees, :move]
+- order = [:win, :lose, :grue_move, :rest, :loot, :grue_flees, :move]
 li id="turn_#{m.player.stats[:turns].to_s}"
   - order.each do |item|
     - if item == :rest

@@ -53,12 +53,10 @@ class MiniZorkApp < Sinatra::Base
       command = params['clicked_command'].to_sym
       unless settings.mzw.game_over
         settings.mzw.play(command)
-        # unless settings.mzw.player.moved? || settings.mzw.player.rested?
-        if settings.mzw.output_hash[:move] == false
-          @msg = "There is no exit to the #{command.to_s.upcase}!"
-          slim :"/slim/invalid_move", locals: {msg: @msg}
-        else
+        if settings.mzw.player.moved? || settings.mzw.player.rested?
           mzw_get( settings.template_type, :turn )
+        else
+          mzw_get( settings.template_type, :invalid_move)
         end
       end
     elsif params['template_type']
@@ -67,9 +65,7 @@ class MiniZorkApp < Sinatra::Base
       mzw_get( settings.template_type, :index )
     else
       session_settings = {}
-      #puts "sss1", sess_settings
       session_settings = params
-      #puts "sss2", sess_settings
       new_mzw = MiniZorkWeb.new(session_settings)
       reset_mzw(new_mzw)
       mzw_get( settings.template_type, :main )
