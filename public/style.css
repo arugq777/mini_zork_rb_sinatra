@@ -1,0 +1,155 @@
+@font-face {
+  font-family: "Green Screen";
+  src: url("./fonts/Greenscr.ttf"); }
+
+* {
+  margin: 0;
+  padding: 0; }
+
+.aquamarine {
+  background: aquamarine;
+  color: #005b9a; }
+
+.burntsienna {
+  background: #623034;
+  color: #e48743; }
+
+.chartreuse {
+  background: #dfff00;
+  color: #88bb55; }
+
+.cobalt {
+  background: #0047ab;
+  color: #e0e9e9; }
+
+.emerald {
+  background: #50c878;
+  color: #005300; }
+
+.lavender {
+  background: #b57edc;
+  color: #4000bb; }
+
+.ochre {
+  background: #cc7722;
+  color: #f8d4ad; }
+
+.vermilion {
+  background: #e34234;
+  color: #730000; }
+
+.violet {
+  background: #8f00ff;
+  color: lavender; }
+
+body, button, select, option {
+  font-family: "Green Screen", "Consolas", "Monaco", monospace; }
+
+.error, #loading {
+  display: none; }
+
+body {
+  background-color: black;
+  color: #fff; }
+
+#wrapper {
+  background: black;
+  min-width: 780px;
+  max-width: 1260px;
+  margin: 10px auto; }
+  #wrapper #inside-wrapper {
+    margin: 10px 10px 0px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+#main {
+  padding-left: 27%;
+  padding-top: 20px; }
+
+aside {
+  max-width: 25%;
+  float: left;
+  padding-left: 15px;
+  padding-top: 20px; }
+
+.heading {
+  color: yellow;
+  min-width: 95%;
+  padding: 10px;
+  margin: 10px 0 10px 0;
+  border: solid 2px;
+  border-color: yellow; }
+
+footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  color: lime;
+  background-color: black;
+  text-align: center; }
+
+header, .heading, .move, .invalid_move, #turns .loot,
+#loading {
+  text-align: center; }
+
+ol, ul {
+  list-style-position: inside; }
+
+ul {
+  list-style: none; }
+
+.sense ul {
+  list-style: square inside; }
+  .sense ul li {
+    padding: 5px 0 5px 0; }
+
+footer ul li {
+  display: inline-block;
+  padding: 5px; }
+  footer ul li:hover {
+    background-color: lime;
+    color: black; }
+
+.heading:hover {
+  background-color: lime;
+  color: black; }
+
+#info li {
+  padding-left: 10px; }
+
+button {
+  background-color: #007700;
+  border: 2px solid;
+  padding: 5px; }
+  button:hover {
+    background-color: lime; }
+
+aside form {
+  padding-bottom: 20px; }
+
+#turns li div {
+  margin: 10px;
+  padding: 20px; }
+  #turns li div {
+    border-style: double;
+    border-width: 20px; }
+    #turns li div.lose {
+      border-color: #f00;
+      color: #f00; }
+    #turns li div.win {
+      border-color: #0ff;
+      color: #0ff; }
+  #turns li div.grue_flees, #turns li div.rest {
+    border-color: yellow; }
+  #turns li div.invalid_move, #turns li div.move, #turns li div.rest, #turns li div.grue_flees, #turns li div.loot {
+    margin: 10px;
+    color: yellow; }
+  #turns li div.loot {
+    color: lime; }
+  #turns li div.look, #turns li div.look div, #turns li div.invalid_move, #turns li div.grue_move, #turns li div.move, #turns li div.loot {
+    border: none;
+    padding: 10px; }
+  #turns li div.look {
+    -moz-box-shadow: 10px 10px rgba(120, 120, 120, 0.5);
+    -webkit-box-shadow: 10px 10px rgba(120, 120, 120, 0.5);
+    box-shadow: 10px 10px rgba(120, 120, 120, 0.5); }

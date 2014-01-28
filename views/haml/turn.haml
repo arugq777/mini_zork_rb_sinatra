@@ -11,13 +11,14 @@
       - else
         - unless m.game_over
           %div{ :class => "look #{m.player.room.color.to_s.delete(' ')}"}
-            .start
-              %p= oh[:start] unless nil
+            - unless oh[:start].nil?
+              .start
+                %p= oh[:start]
             .room_description
               %p= oh[:look]
-            .sense
-              %ul
-                - unless oh[:sense].nil?
+            - unless oh[:sense].nil?
+              .sense
+                %ul
                   - oh[:sense].each_value do |sense|
                     %li= sense
             .exits
