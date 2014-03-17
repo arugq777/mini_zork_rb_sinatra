@@ -10,11 +10,11 @@ class MiniZork
   include Gameplay
   attr_accessor :game_settings, :all_settings, :messages, :restart, :game_over, 
                 :quit, :player, :map, :grue, :goal, :output_hash, :info_hash
+  # attr_accessor :restart, :quit
+  # attr_reader :game_settings, :all_settings, :messages, :game_over, 
+  #             :player, :map, :grue, :goal, :output_hash, :info_hash
 
   @@commands =[:south, :west, :north, :east, :rest, :q, :quit] #:restart
-
-  @@info = [:gems, :i, :inventory, :stats, :statistics, :moves, 
-            :turns, :l, :look]
 
   def initialize
     @game_over = false

@@ -3,12 +3,21 @@ require "grue"
 require "player"
 
 describe Grue do
-  g = Grue.new(:cobalt, :emerald)
-  p = Player.new(:emerald)
+  json = File.read("./config/game_config.json")
+  settings = JSON.parse(json, symbolize_names: true)
+
+  json = File.read("./config/map_config.json")
+  map = GameMap.new(json)
+
+  Path.set_map(map)
+  RoomOccupant.set_map(map)
+
+  g = Grue.new(:cobalt, :emerald, settings[:grue])
+  p = Player.new(:emerald, settings[:player])
 
   it "has a room" do
     g.room.should_not == nil
-    GameMap.instance.rooms[g.room.color].should_not == nil
+    map.rooms[g.room.color].should_not == nil
   end
 
   it "has a path" do

@@ -48,7 +48,7 @@ $(document).ready( function(){
 //each ajax call
 $( document ).ajaxStart(function() {
   $( "#loading" ).show();
-  loadingAnimation();
+  //loadingAnimation();
 });
 //and then stopped.
 $( document ).ajaxStop(function() {
@@ -75,7 +75,7 @@ function submitMove(ev){
     },
     complete: function(){
       updateInfo();
-      $( "#loading" ).finish();
+      //$( "#loading" ).finish();
     }
   });
 }
@@ -102,7 +102,7 @@ function submitSettings(ev){
     },
     complete: function(){
       updateInfo();
-      $( "#loading" ).finish();
+      //$( "#loading" ).finish();
     }
   });
 }
@@ -119,14 +119,14 @@ function updateInfo(){
   });
 }
 
-function loadingAnimation(){
-  var $loading = $("#loading");
-  setInterval(function(){
-    $loading.animate({"letter-spacing": "5px"}, 500, function(){
-      $loading.animate({"letter-spacing": "0px"}, 500);
-    });
-  }, 2000);
-}
+// function loadingAnimation(){
+//   var $loading = $("#loading");
+//   setInterval(function(){
+//     $loading.animate({"letter-spacing": "5px"}, 500, function(){
+//       $loading.animate({"letter-spacing": "0px"}, 500);
+//     });
+//   }, 2000);
+// }
 
 //the replace() is there to find 'option.burntsienna', instead of 'option.burnt sienna'.
 //burnt sienna sucks, in sooo many ways. that's the takeaway moral of the story, kids.
@@ -136,7 +136,7 @@ function disableInitialRoomOptions(grs, prs){
 }
 
 function toggleDisabledProp(obj){
-  obj.prop("disabled", function(){                             
+  obj.prop("disabled", function(){
     return ! $(this).prop('disabled');
   });
 }
